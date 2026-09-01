@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME || 'Table 1'; // Имя таблицы
 
   // URL для запроса к Airtable API
-  const url = `https://airtable.com{AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
+  const url = `https://airtable.com${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
 
   try {
     const response = await fetch(url, {

@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
   try {
     // Отправляем запрос в Telegram с сервера
-    const response = await fetch(`https://telegram.org{TELEGRAM_TOKEN}/sendMessage`, {
+    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

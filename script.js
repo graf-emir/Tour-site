@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!container || !template) return;
 
     // Делаем запрос к нашей серверной функции
-    fetch('/api/get-tours')
+    fetch('/api/get-tours.js')
     .then(response => response.json())
     .then(data => {
         if (data.success && data.tours.length > 0) {
@@ -57,7 +57,7 @@ document.getElementById('tgOrderForm').addEventListener('submit', function(e) {
     statusText.innerText = 'Отправка...';
 
     // Отправляем данные на нашу серверную функцию Vercel
-    fetch('/api/send-telegram', {
+    fetch('/api/send-tg.js', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
