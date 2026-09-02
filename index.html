@@ -3,14 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Endorphin Travel</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
 
   <div class="main">
+    <!-- ИЗМЕНЕНО: Блок шапки с фоновым слайдером -->
     <div class="mainHeader">
+      <div class="header-bg-slider">
+        <!-- Укажите здесь пути к вашим фоновым картинкам для шапки -->
+        <div class="header-slide active" style="background-image: url('pict/bg1.jpg');"></div>
+        <div class="header-slide" style="background-image: url('pict/bg2.jpg');"></div>
+        <div class="header-slide" style="background-image: url('pict/bg3.jpg');"></div>
+      </div>
       <header>
         <img src="" alt="logo">
         <h1>Endorphin Travel</h1>
@@ -19,69 +26,80 @@
       </header>
     </div>
     
-        <div class="catalog">
+    <div class="catalog">
       <header>
         <h1>наши туры</h1>
       </header>
 
-      <!-- Сюда JS будет загружать туры с Airtable -->
       <div id="toursContainer" class="tours-grid">
         <p class="loading-text">Загрузка туров...</p>
       </div>
     </div>
 
-    <!-- Шаблон карточки (браузер его не отображает сам по себе) -->
     <template id="tourTemplate">
       <div class="tourCard">
-        <h3 class="nameTour">название тура</h3>
-        <img src="" alt="фото тура" class="tourImg">
-        <p class="tourDate">дата тура</p>
+        <h3 class="nameTour"></h3>
+        <img src="" alt="photo" class="tourImg">
+        <p class="tourDate"></p>
         <button class="readMore">подробнее</button>
       </div>
     </template>
 
-
+    <!-- ИЗМЕНЕНО: Секция ConnectingBro с текстом слева и слайдером медиа справа -->
     <div class="connectingBro">
-      <p>Your host<br>
-        Madina, exclusive tour creator.
-        Born in Kyrgyzstan and lived in UAE, Madina>
-        was always proud to share her country culture,
-        great food,  beautiful nature. Creating great
-        memories in your life and pleasant experience.
-      </p>
-      <button class="readMore">подробнее</button>
-      <video src=""></video>
+      <div class="host-text">
+        <p>Your host<br>
+          Madina, exclusive tour creator.<br>
+          Born in Kyrgyzstan and lived in UAE, Madina<br>
+          was always proud to share her country culture,<br>
+          great food, beautiful nature. Creating great<br>
+          memories in your life and pleasant experience.
+        </p>
+        <button class="readMore">подробнее</button>
+      </div>
+      
+      <!-- Медиа-галерея (видео по умолчанию + фото) -->
+      <div class="host-media-slider">
+        <div class="media-window">
+          <!-- Слайд 1: Видео (атрибут controls позволяет нажать "во весь экран") -->
+          <div class="media-slide media-active">
+            <video src="pict/vid.mp4" controls playsinline></video>
+          </div>
+          <!-- Слайд 2: Фото портфолио -->
+          <div class="media-slide">
+            <img src="pict/night.jpeg" alt="Portfolio 1">
+          </div>
+          <!-- Слайд 3: Фото портфолио -->
+          <div class="media-slide">
+            <img src="pict/food.jpeg" alt="Portfolio 2">
+          </div>
+        </div>
+        
+        <!-- Кнопки управления слайдером -->
+        <button class="slider-btn prev-btn">&#10094;</button>
+        <button class="slider-btn next-btn">&#10095;</button>
+      </div>
     </div>
 
     <footer class="site-footer">
       <div class="footer-container">
         <h3>Оставить заявку</h3>
-        
         <form id="tgOrderForm" class="footer-form">
-          <!-- 1. Название товара/услуги -->
           <div class="form-field">
             <input type="text" id="itemName" placeholder="в какой тур хотите?" required>
           </div>
-          
-          <!-- 4. Имя пользователя -->
           <div class="form-field">
             <input type="text" id="userName" placeholder="Ваше имя" required>
           </div>
-
-          <!-- 2. Email пользователя -->
           <div class="form-field">
             <input type="email" id="userEmail" placeholder="Ваш Email" required>
           </div>
-
-          <!-- 3. Номер ТГ / Ватсапп -->
           <div class="form-field">
-            <input type="tel" id="userPhone" placeholder="Телефон (Telegtam/ WhatsApp)" required>
+            <input type="tel" id="userPhone" placeholder="Телефон (Telegram/ WhatsApp)" required>
           </div>
-
           <button type="submit" id="submitBtn">Отправить в Telegram</button>
           <p id="formStatus" class="status-message"></p>
         </form>
-        
       </div>
     </footer>
 

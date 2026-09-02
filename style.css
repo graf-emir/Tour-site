@@ -1,4 +1,6 @@
-/* Базовые настройки и шрифты */
+/* ==========================================
+   1. БАЗОВЫЕ НАСТРОЙКИ, ШРИФТЫ И КНОПКИ
+   ========================================== */
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +14,6 @@ body {
   line-height: 1.6;
 }
 
-/* Кнопки (Общий стиль) */
 button {
   cursor: pointer;
   border: none;
@@ -22,21 +23,68 @@ button {
   transition: all 0.3s ease;
 }
 
-/* Главный контейнер */
 .main {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* 🏔 Шапка сайта (Стиль неба и гор) */
-.mainHeader header {
-  background: linear-gradient(180deg, #d4ebf8 0%, #e2f0d9 100%); /* Градиент от неба к холмам */
-  padding: 60px 20px;
-  text-align: center;
+/* ==========================================
+   2. 🏔 ШАПКА САЙТА (ЗАЦИКЛЕННЫЙ ФОН-СЛАЙДЕР)
+   ========================================== */
+.mainHeader {
+  position: relative;
+  min-height: 450px;
+  height: 70vh; /* Занимает 70% высоты экрана */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   border-radius: 20px;
   margin-bottom: 40px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Контейнер для фоновых изображений */
+.header-bg-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Слайды фона */
+.header-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out; /* Плавное перетекание за 1.5 сек */
+}
+
+/* Активный фон */
+.header-slide.active {
+  opacity: 1;
+}
+
+/* Текстовый контент поверх фонового слайдера */
+.mainHeader header {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(212, 235, 248, 0.85) 0%, rgba(226, 240, 217, 0.85) 100%);
+  padding: 40px 30px;
+  text-align: center;
+  border-radius: 20px;
+  max-width: 600px;
+  width: 90%;
+  backdrop-filter: blur(4px); /* Легкое размытие заднего фона для премиального вида */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
 .mainHeader h1 {
@@ -62,7 +110,9 @@ button {
   transform: translateY(-2px);
 }
 
-/* 🗺 Каталог туров */
+/* ==========================================
+   3. 🗺 КАТАЛОГ И СЕТКА ТУРОВ (ИЗ AIRTABLE)
+   ========================================== */
 .catalog {
   margin-bottom: 60px;
 }
@@ -72,7 +122,20 @@ button {
   color: #2e5a44;
   margin-bottom: 30px;
   font-size: 2rem;
-  position: relative;
+}
+
+/* Сетка для автоматических карточек */
+.tours-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 25px;
+}
+
+.loading-text {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #4a6b5d;
+  font-size: 1.1rem;
 }
 
 /* Карточка тура */
@@ -80,19 +143,21 @@ button {
   background-color: #ffffff;
   border-radius: 15px;
   padding: 20px;
-  max-width: 350px;
-  margin: 0 auto;
+  width: 100%;
   box-shadow: 0 6px 18px rgba(0,0,0,0.04);
   border: 1px solid #e1efe6;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.tourCard img {
+.tourImg {
   width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 10px;
-  background-color: #e9ecef; /* Заглушка, пока нет фото */
+  background-color: #e9ecef;
   margin: 15px 0;
 }
 
@@ -117,22 +182,29 @@ button {
   background-color: #bee5eb;
 }
 
-/* 👋 Блок об авторе (Connecting Bro) */
+/* ==========================================
+   4. 👋 БЛОК ОБ АВТОРЕ С МЕДИА-СЛАЙДЕРОМ
+   ========================================== */
 .connectingBro {
   background-color: #e8f4f8; /* Освежающий нежно-голубой */
   border-radius: 20px;
   padding: 40px;
   margin-bottom: 60px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Текст слева, слайдер справа */
   align-items: center;
-  text-align: center;
-  gap: 20px;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.host-text {
+  flex: 1;
+  text-align: left;
 }
 
 .connectingBro p {
   font-size: 1.1rem;
-  max-width: 600px;
+  margin-bottom: 20px;
 }
 
 .connectingBro .readMore {
@@ -144,15 +216,85 @@ button {
   background-color: #c3e6cb;
 }
 
-.connectingBro video {
+/* Контейнер интерактивного слайдера */
+.host-media-slider {
+  flex: 1;
+  position: relative;
   width: 100%;
-  max-width: 500px;
-  border-radius: 12px;
+  max-width: 480px;
+  height: 320px;
   background-color: #000;
-  margin-top: 15px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
 }
 
-/* 📝 Подвал сайта и форма (Вечерние горы / Хвойный лес) */
+.media-window {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Индивидуальные слайды (скрыты по умолчанию) */
+.media-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Активный видимый слайд */
+.media-slide.media-active {
+  opacity: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.media-slide video,
+.media-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Изображения и видео заполняют блок без полей */
+}
+
+/* Кнопки стрелочек */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  color: #2d4037;
+  border: none;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.slider-btn:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.prev-btn { left: 15px; }
+.next-btn { right: 15px; }
+
+/* ==========================================
+   5. 📝 ПОДВАЛ САЙТА И ФОРМА
+   ========================================== */
 .site-footer {
   background-color: #2c4c38; /* Глубокий хвойный зеленый */
   color: #ffffff;
@@ -214,4 +356,24 @@ button {
 .status-message {
   text-align: center;
   font-size: 0.9rem;
+}
+
+/* ==========================================
+   6. 📱 АДАПТИВНОСТЬ ПОД МОБИЛЬНЫЕ ТЕЛЕФОНЫ
+   ========================================== */
+@media (max-width: 768px) {
+  .connectingBro {
+    flex-direction: column; /* Текст и слайдер встают в одну вертикальную колонку */
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  .host-text {
+    text-align: center;
+  }
+
+  .host-media-slider {
+    max-width: 100%;
+    height: 280px; /* Немного уменьшаем высоту на смартфонах */
+  }
 }

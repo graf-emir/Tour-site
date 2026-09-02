@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+///////////////////////////////////////////////////////////////////////////////////
 
 document.getElementById('tgOrderForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -83,4 +84,55 @@ document.getElementById('tgOrderForm').addEventListener('submit', function(e) {
     .finally(() => {
         submitBtn.disabled = false;
     });
+});
+
+///////////////////////////////////////////////////////////////////////////////////
+
+// ====== СЛАЙДЕР В ШАПКЕ САЙТА (ЗАЦИКЛЕННЫЙ ФОН) ======
+function initHeaderSlider() {
+    const slides = document.querySelectorAll('.header-slide');
+    if (slides.length === 0) return;
+    
+    let currentSlide = 0;
+    
+    setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }, 5000); // Интервал смены картинок — 5 секунд
+}
+
+// ====== СЛАЙДЕР В СЕКЦИИ CONNECTINGBRO (ВИДЕО + ФОТО) ======
+function initHostSlider() {
+    const slides = document.querySelectorAll('.media-slide');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    
+    if (slides.length === 0 || !prevBtn || !nextBtn) return;
+    
+    let currentIndex = 0;
+    
+    function showSlide(index) {
+        // Ставим на паузу видео, если мы перелистываем на другой слайд
+        const currentVideo = slides[currentIndex].querySelector('video');
+        if (currentVideo) currentVideo.pause();
+
+        slides[currentIndex].classList.remove('media-active');
+        currentIndex = index;
+        
+        // Зацикливание слайдера
+        if (currentIndex >= slides.length) currentIndex = 0;
+        if (currentIndex < 0) currentIndex = slides.length - 1;
+        
+        slides[currentIndex].classList.add('media-active');
+    }
+    
+    nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
+    prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
+}
+
+// Запуск всех слайдеров после полной загрузки HTML
+document.addEventListener('DOMContentLoaded', () => {
+    initHeaderSlider();
+    initHostSlider();
 });
