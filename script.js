@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .catch(error => {
         console.error('Ошибка загрузки каталога:', error);
-        container.innerHTML = '<p style="color: white;">Не удалось загрузить туры. Попробуйте позже.</p>';
+        container.innerHTML = '<p style="color: red;">Не удалось загрузить туры. Попробуйте позже.</p>';
     });
 });
 

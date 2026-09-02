@@ -9,7 +9,7 @@
 }
 
 body {
-  background: linear-gradient(180deg, rgba(98, 114, 221, 0.496) 0%, rgba(163, 236, 118, 0.562) 100%);; /* Очень мягкий пастельно-зеленый фон */
+  background-color: #0c5460;
   color: #e0fbee; /* Темно-зеленый для хорошей читаемости текста */
   line-height: 1.6;
 }
@@ -17,7 +17,7 @@ body {
 .main {
   max-width: 1200px;
   margin: 0 auto;
-  background: linear-gradient(180deg, rgb(26, 41, 141) 0%, rgb(3, 98, 76) 33%, rgb(7, 7, 7) 66%, rgb(3, 98, 76) 90%); 
+  background-color: #0F172A;
 }
 
 /* ==========================================
@@ -75,7 +75,7 @@ body {
 .mainHeader header {
   position: relative;
   z-index: 2;
-  background: linear-gradient(180deg, rgba(98, 114, 221, 0.496) 0%, rgba(163, 236, 118, 0.562) 100%);
+  background-color: #0f172aad;
   padding: 30px 20px;
   margin-top: -120px;
   text-align: center;
@@ -101,7 +101,7 @@ body {
 .mainHeader a {
   display: inline-block;
   padding: 6px 12px;
-  background-color: #a1bd0096;
+  background-color: #166534;
   color: #eff1ce;
   text-decoration: none;
   border-radius: 8px;
@@ -123,7 +123,7 @@ body {
 
 .catalog header h1 {
   text-align: center;
-  color: #c3ffe1;
+  color: #c9f2cc;
   margin-bottom: 30px;
   font-size: 2rem;
 }
@@ -190,7 +190,7 @@ body {
  4. 👋 БЛОК ОБ АВТОРЕ С МЕДИА-СЛАЙДЕРОМ
 ========================================== */
 .connectingBro {
-  background-color: #e8f4f8;
+  background-color: #e8f4f800;
   border-radius: 20px;
   padding: 40px;
   margin-bottom: 60px;
@@ -209,14 +209,14 @@ body {
 .connectingBro p {
   font-size: 1.3rem;
   margin-bottom: 20px;
-  color: #dce6e1; /* ИЗМЕНЕНО: Возвращен темный цвет текста, белый #f4fff9 не читался на голубом */
+  color: #e8ecb8; /* ИЗМЕНЕНО: Возвращен темный цвет текста, белый #f4fff9 не читался на голубом */
 }
 
 .connectingBro .readMore {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #2e5a44;
-  color: #a3c2ae;
+  background-color: #fff3cd;
+  color: #533f03;
   text-decoration: none;
   border-radius: 5px;
   font-weight: bold; /* ИЗМЕНЕНО: Значение font-family: bold было неверным, нужно font-weight */
@@ -376,7 +376,7 @@ body {
   .connectingBro {
     flex-direction: column; /* Текст и слайдер встают в одну вертикальную行走 колонку */
     text-align: center;
-    background-color: #2c4c3800;
+    background-color: #2c4c38;
     padding: 30px 0px;
   }
 
