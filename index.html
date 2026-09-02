@@ -14,15 +14,21 @@
     <div class="mainHeader">
       <div class="header-bg-slider">
         <!-- Укажите здесь пути к вашим фоновым картинкам для шапки -->
-        <div class="header-slide active" style="background-image: url('pict/bg1.jpg');"></div>
-        <div class="header-slide" style="background-image: url('pict/bg2.jpg');"></div>
-        <div class="header-slide" style="background-image: url('pict/bg3.jpg');"></div>
+        <div class="header-slide active" style="background-image: url('pict/food.jpeg');"></div>
+        <div class="header-slide" style="background-image: url('pict/night.jpeg');"></div>
       </div>
+
+      <div class="nav-bar">
+      </div>
+
+      <div class="logo">
+        <img src="pict/nikitos.jpg" alt="mee">
+      </div>
+
       <header>
-        <img src="" alt="logo">
         <h1>Endorphin Travel</h1>
         <p>Exclusive Tour Creator </p>
-        <button>перейти к турам</button>
+        <a href="info.html">see tours</a>
       </header>
     </div>
     
@@ -52,34 +58,31 @@
           Madina, exclusive tour creator.<br>
           Born in Kyrgyzstan and lived in UAE, Madina<br>
           was always proud to share her country culture,<br>
-          great food, beautiful nature. Creating great<br>
+          great food,  beautiful nature. Creating great<br>
           memories in your life and pleasant experience.
         </p>
-        <button class="readMore">подробнее</button>
+        <a href="info.html" class="readMore">read more</a>
       </div>
       
-      <!-- Медиа-галерея (видео по умолчанию + фото) -->
       <div class="host-media-slider">
         <div class="media-window">
-          <!-- Слайд 1: Видео (атрибут controls позволяет нажать "во весь экран") -->
+          <!-- Видео без кнопок управления, работает как вечная зацикленная гифка -->
           <div class="media-slide media-active">
-            <video src="pict/vid.mp4" controls playsinline></video>
+            <video src="pict/vid.mp4" autoplay loop muted playsinline></video>
           </div>
-          <!-- Слайд 2: Фото портфолио -->
+          <!-- Ваши дополнительные слайды-фотографии -->
           <div class="media-slide">
-            <img src="pict/night.jpeg" alt="Portfolio 1">
+            <img src="pict/food.jpeg" alt="photo">
           </div>
-          <!-- Слайд 3: Фото портфолио -->
           <div class="media-slide">
-            <img src="pict/food.jpeg" alt="Portfolio 2">
+            <img src="pict/night.jpeg" alt="photo">
           </div>
         </div>
-        
-        <!-- Кнопки управления слайдером -->
         <button class="slider-btn prev-btn">&#10094;</button>
         <button class="slider-btn next-btn">&#10095;</button>
       </div>
     </div>
+
 
     <footer class="site-footer">
       <div class="footer-container">
@@ -100,6 +103,12 @@
           <button type="submit" id="submitBtn">Отправить в Telegram</button>
           <p id="formStatus" class="status-message"></p>
         </form>
+      </div>
+
+      <div class="footerInfo">
+        <a href="">ссылка на иснтаграмм</a>
+        <p>контактный номер телефона</p>
+        <a href="">+123 456 678 900</a>
       </div>
     </footer>
 

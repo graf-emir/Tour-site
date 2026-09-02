@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .catch(error => {
         console.error('Ошибка загрузки каталога:', error);
-        container.innerHTML = '<p style="color: red;">Не удалось загрузить туры. Попробуйте позже.</p>';
+        container.innerHTML = '<p style="color: white;">Не удалось загрузить туры. Попробуйте позже.</p>';
     });
 });
 
@@ -113,10 +113,6 @@ function initHostSlider() {
     let currentIndex = 0;
     
     function showSlide(index) {
-        // Ставим на паузу видео, если мы перелистываем на другой слайд
-        const currentVideo = slides[currentIndex].querySelector('video');
-        if (currentVideo) currentVideo.pause();
-
         slides[currentIndex].classList.remove('media-active');
         currentIndex = index;
         
