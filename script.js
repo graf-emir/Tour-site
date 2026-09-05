@@ -136,3 +136,17 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeaderSlider();
     initHostSlider();
 });
+
+//////////////////////////////////////////////////////////////
+
+document.querySelector('.copy-phone-btn').addEventListener('click', function() {
+    // Получаем номер телефона из атрибута data-phone
+    const phoneNumber = this.getAttribute('data-phone');
+    
+    // Копируем текст в буфер обмена
+    navigator.clipboard.writeText(phoneNumber).then(() => {
+        // Здесь можно настроить уведомление для пользователя
+    }).catch(err => {
+        console.error('Ошибка при копировании: ', err);
+    });
+});

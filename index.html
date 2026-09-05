@@ -31,7 +31,7 @@
     <header>
       <h1>Endorphin Travel</h1>
       <p>Exclusive Tour Creator </p>
-      <a href="info.html">see tours</a>
+      <a href="#catalogSection" class="see-tours-btn">see tours</a>
     </header>
   </div>
 
@@ -39,13 +39,13 @@
     <!-- ИЗМЕНЕНО: Блок шапки с фоновым слайдером -->
 
     
-    <div class="catalog">
+    <div class="catalog" id="catalogSection">
       <header>
-        <h1>наши туры</h1>
+        <h1>our tours</h1>
       </header>
 
       <div id="toursContainer" class="tours-grid">
-        <p class="loading-text">Загрузка туров...</p>
+        <p class="loading-text">Tours loading...</p>
       </div>
     </div>
 
@@ -54,7 +54,7 @@
         <h3 class="nameTour"></h3>
         <img src="" alt="photo" class="tourImg">
         <p class="tourDate"></p>
-        <a href="https://example.com" class="readMore">подробнее</a>
+        <a href="https://example.com" class="readMore">read more</a>
       </div>
     </template>
 
@@ -97,31 +97,34 @@
         <form id="tgOrderForm" class="footer-form">
           <div class="form-field">
             <!-- ДОБАВЛЕН атрибут list="toursList" -->
-            <input type="text" id="itemName" placeholder="в какой тур хотите?" list="toursList" required>
+            <input type="text" id="itemName" placeholder="Tour" list="toursList" required>
             <!-- САМ СПИСОК ПОДСКАЗОК (изначально пустой, JS его заполнит) -->
             <datalist id="toursList"></datalist>
           </div>
 
           <div class="form-field">
-            <input type="text" id="userName" placeholder="Ваше имя" required>
+            <input type="text" id="userName" placeholder="your name" required>
           </div>
           <div class="form-field">
-            <input type="email" id="userEmail" placeholder="Ваш Email" required>
+            <input type="email" id="userEmail" placeholder="your email" required>
           </div>
           <div class="form-field">
-            <input type="tel" id="userPhone" placeholder="Телефон (Telegram/ WhatsApp)" required>
+            <input type="tel" id="userPhone" placeholder="phone (Telegram/ WhatsApp)" required>
           </div>
-          <button type="submit" id="submitBtn">Отправить в Telegram</button>
+          <button type="submit" id="submitBtn">sumbit</button>
           <p id="formStatus" class="status-message"></p>
         </form>
       </div>
 
       <div class="footerInfo">
-        <a href="" class="soc">иснтаграм</a>
+        <a href="" class="soc">inst</a>
         <div class="right">
-        <p>контактный номер телефона: <br><a href="">+123 456 678 900</a></p>
+        <p>contact phone number <br>
+          <button class="copy-phone-btn" data-phone="+12345678900">
+            +123 456 78900
+          </button></p>
         </div>
-        <a href="" class="soc">телеграм</a>
+        <a href="" class="soc">tg</a>
       </div>
     </footer>
 

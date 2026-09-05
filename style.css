@@ -14,6 +14,11 @@ body {
   line-height: 1.6;
 }
 
+html {
+  scroll-behavior: smooth; /* Включает плавную прокрутку по всему сайту */
+}
+
+
 .main {
   max-width: 1200px;
   margin: 0 auto;
@@ -146,7 +151,7 @@ a {
   margin-bottom: 25px;
 }
 
-.hhheader a {
+.see-tours-btn {
   display: inline-block;
   padding: 6px 12px;
   background-color: #166534;
@@ -155,9 +160,12 @@ a {
   border-radius: 8px;
   font-family: bold;
   transition: 0.4s;
+  cursor: pointer;
+  text-decoration: none;
+  border: 2px solid #ffeeba;
 }
 
-.hhheader a:hover {
+.see-tours-btn:hover {
   background-color: #c3e6cb;
   transition: 0.4s;
 }
@@ -450,6 +458,16 @@ a {
 
 .footerInfo p{
   color: #334a81;
+}
+
+.copy-phone-btn {
+  background-color: #fff3cd;
+  color: #533f03;
+  font-size: 1rem;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px 0;
+
 }
 
 /* ==========================================
