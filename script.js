@@ -1,41 +1,45 @@
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('toursContainer');
     const template = document.getElementById('tourTemplate');
+    // НАХОДИМ НАШ DATALIST
+    const datalist = document.getElementById('toursList');
 
     if (!container || !template) return;
 
-    // Делаем запрос к нашей серверной функции
-    fetch('/api/get-tours.js')
+    fetch('/api/get-tours')
     .then(response => response.json())
     .then(data => {
         if (data.success && data.tours.length > 0) {
-            container.innerHTML = ''; // Удаляем надпись "Загрузка..."
+            container.innerHTML = ''; 
+            if (datalist) datalist.innerHTML = ''; // Очищаем старые подсказки, если были
 
-            // Проходим циклом по каждому туру из Airtable
             data.tours.forEach(tour => {
-                // Клонируем структуру карточки из HTML-шаблона
+                // 1. Старый код отрисовки карточек в каталоге
                 const cardClone = template.content.cloneNode(true);
-
-                // Заполняем данными карточку
                 cardClone.querySelector('.nameTour').innerText = tour.name;
                 cardClone.querySelector('.tourDate').innerText = tour.date;
-                
                 const img = cardClone.querySelector('.tourImg');
                 img.src = tour.image;
                 img.alt = `Фото тура: ${tour.name}`;
-
-                // Добавляем готовую карточку на страницу в каталог
                 container.appendChild(cardClone);
+
+                // 2. НОВЫЙ КОД: Создаем подсказку для анкеты в подвале
+                if (datalist) {
+                    const option = document.createElement('option');
+                    option.value = tour.name; // Записываем название тура из Airtable в подсказку
+                    datalist.appendChild(option);
+                }
             });
         } else {
-            container.innerHTML = '<p>На данный момент активных туров нет.</p>';
+            container.innerHTML = '<p>На данный момент active туров нет.</p>';
         }
     })
     .catch(error => {
         console.error('Ошибка загрузки каталога:', error);
-        container.innerHTML = '<p style="color: red;">Не удалось загрузить туры. Попробуйте позже.</p>';
+        container.innerHTML = '<p style="color: red;">Не удалось загрузить туры.</p>';
     });
 });
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 

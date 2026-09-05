@@ -96,8 +96,12 @@
         <h3>Оставить заявку</h3>
         <form id="tgOrderForm" class="footer-form">
           <div class="form-field">
-            <input type="text" id="itemName" placeholder="в какой тур хотите?" required>
+            <!-- ДОБАВЛЕН атрибут list="toursList" -->
+            <input type="text" id="itemName" placeholder="в какой тур хотите?" list="toursList" required>
+            <!-- САМ СПИСОК ПОДСКАЗОК (изначально пустой, JS его заполнит) -->
+            <datalist id="toursList"></datalist>
           </div>
+
           <div class="form-field">
             <input type="text" id="userName" placeholder="Ваше имя" required>
           </div>
