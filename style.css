@@ -1,7 +1,7 @@
 /* ==========================================
    1. БАЗОВЫЕ НАСТРОЙКИ, ШРИФТЫ И КНОПКИ
    ========================================== */
-* {
+*  {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,7 +9,7 @@
 }
 
 body {
-  background: linear-gradient(  #fbfcfe 0%, #ffffff 70%);
+  background-color: #ffeeb7;
   color: #29513e; /* Темно-зеленый для хорошей читаемости текста */
   line-height: 1.6;
 }
@@ -44,7 +44,7 @@ a {
   top: 0;
   width: 100%;
   z-index: 99;
-  background-color: #4554b6;
+  background-color: #31633a;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -64,7 +64,7 @@ a {
   justify-content: center; /* Центрирует текст внутри кнопки по горизонтали */
   align-items: center;     /* Центрирует текст внутри кнопки по вертикали */
   padding: 8px 4px;      /* Внутренние отступы кнопки */
-  background-color: #f0f0f0; /* Цвет фона кнопки */
+  background: linear-gradient(45deg, #b9a538 20%, #cbc37f, #b9a538 80%);
   text-decoration: none;
   color: #333;
   border-radius: 6px;      /* Скругление углов */
@@ -179,7 +179,7 @@ a {
 
 .catalog header h1 {
   text-align: center;
-  color: #0c1e5c;
+  color: #237031;
   margin-bottom: 30px;
   font-size: 2rem;
 }
@@ -200,7 +200,7 @@ a {
 
 /* Карточка тура */
 .tourCard {
-  background-color: #2c4c38;
+  background-color: #3d674d;
   border-radius: 60px;
   padding: 20px;
   width: 100%;
@@ -274,7 +274,7 @@ a {
 .connectingBro .readMore {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #fff3cd;
+  background: linear-gradient(45deg, #d3c15f 20%, #ccc58b, #d9c660 80%);;
   color: #533f03;
   text-decoration: none;
   border-radius: 5px;
@@ -368,7 +368,7 @@ a {
    5. 📝 ПОДВАЛ САЙТА И ФОРМА
    ========================================== */
 .footer-container {
-  background-color: #3d674d; /* Глубокий хвойный зеленый */
+  background-color: #508259;
   color: #ffffff;
   border-radius: 20px;
   padding: 40px 20px;
@@ -395,15 +395,15 @@ a {
   padding: 14px;
   border: 1px solid #416d51;
   border-radius: 10px;
-  background-color: #355c43;
-  color: #ffffff;
+  background: linear-gradient(45deg, #dcd4a3 32%, #d2cea5db 70%, #c7bf9194 95%);
+  color: #131310;
   font-size: 1rem;
   outline: none;
   transition: border-color 0.3s;
 }
 
 .form-field input::placeholder {
-  color: #a3c2ae;
+  color: #666967;
 }
 
 .form-field input:focus {
@@ -411,7 +411,7 @@ a {
 }
 
 #submitBtn {
-  background-color: #fff3cd;
+  background: linear-gradient(45deg, #d3c15f 20%, #ccc58b, #d9c660 80%);;
   color: #533f03;
   font-size: 1rem;
   border-radius: 10px;
@@ -478,7 +478,7 @@ a {
   .connectingBro {
     flex-direction: column; /* Текст и слайдер встают в одну вертикальную行走 колонку */
     text-align: center;
-    background-color: #3d674d;
+    background-color: #508259;
     padding: 30px 15px;
   }
 
