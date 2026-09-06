@@ -1,10 +1,7 @@
-export const config = {
-  api: {
-    bodyParser: false, // Отключаем стандартный парсер Vercel, так как идет файл
-  },
-};
+// Мы убрали export const config, который ломал роутинг 404
 
 export default async function handler(req, res) {
+  // Разрешаем только POST запросы
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Метод не поддерживается' });
   }
@@ -13,7 +10,7 @@ export default async function handler(req, res) {
   const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
   try {
-    // Читаем входящие данные как FormData через Web API (доступно в современном Node.js на Vercel)
+    // Безопасно парсим Multipart FormData в Node.js среде Vercel
     const webReq = new Request(`https://${req.headers.host}${req.url}`, {
       method: req.method,
       headers: req.headers,
@@ -26,9 +23,9 @@ export default async function handler(req, res) {
     const userName = formData.get('userName');
     const userEmail = formData.get('userEmail');
     const userPhone = formData.get('userPhone');
-    const file = formData.get('receipt'); // Получаем сам файл чека
+    const file = formData.get('receipt'); // Сам файл чека
 
-    // Формируем текст подписи к файлу
+    // Формируем текст подписи
     let message = `🔔 <b>Новая оплата с сайта!</b>\n\n`;
     message += `📦 <b>Тур:</b> ${itemName}\n`;
     message += `👤 <b>Клиент:</b> ${userName}\n`;
@@ -40,17 +37,15 @@ export default async function handler(req, res) {
     tgFormData.append('chat_id', TELEGRAM_CHAT_ID);
     tgFormData.append('parse_mode', 'HTML');
 
-    // Если пользователь прикрепил файл, отправляем его методом sendDocument
+    // Если файл прикреплен, отправляем как документ
     if (file && file.size > 0) {
       tgUrl = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendDocument`;
       tgFormData.append('document', file, file.name);
-      tgFormData.append('caption', message); // Текст заявки будет подписью к документу
+      tgFormData.append('caption', message);
     } else {
-      // Если файла нет, шлем обычное текстовое сообщение
       tgFormData.append('text', message);
     }
 
-    // Отправляем всё это в Telegram
     const response = await fetch(tgUrl, {
       method: 'POST',
       body: tgFormData
