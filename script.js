@@ -46,37 +46,34 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('tgOrderForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
+    // Собираем данные
+    const formData = {
+        itemName: document.getElementById('itemName').value,
+        userName: document.getElementById('userName').value,
+        userEmail: document.getElementById('userEmail').value,
+        userPhone: document.getElementById('userPhone').value
+    };
+
     const statusText = document.getElementById('formStatus');
     const submitBtn = document.getElementById('submitBtn');
 
     submitBtn.disabled = true;
     statusText.style.color = '#fff';
-    statusText.innerText = 'Отправка заявки и файла...';
-
-    // Используем FormData для автоматического сбора текста и файлов
-    const formData = new FormData();
-    formData.append('itemName', document.getElementById('itemName').value);
-    formData.append('userName', document.getElementById('userName').value);
-    formData.append('userEmail', document.getElementById('userEmail').value);
-    formData.append('userPhone', document.getElementById('userPhone').value);
-
-    // Проверяем, прикрепил ли пользователь файл
-    const fileInput = document.getElementById('userReceipt');
-    if (fileInput.files.length > 0) {
-        formData.append('receipt', fileInput.files[0]);
-    }
+    statusText.innerText = 'Отправка...';
 
     // Отправляем данные на нашу серверную функцию Vercel
-    fetch('/api/send-telegram', {
+    fetch('/api/send-tg.js', {
         method: 'POST',
-        // Заголовок Content-Type указывать НЕ НАДО, браузер поставит multipart/form-data сам!
-        body: formData
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             statusText.style.color = '#28a745';
-            statusText.innerText = 'Заявка и чек успешно отправлены!';
+            statusText.innerText = 'Заявка успешно отправлена!';
             document.getElementById('tgOrderForm').reset();
         } else {
             statusText.style.color = '#dc3545';
@@ -92,7 +89,6 @@ document.getElementById('tgOrderForm').addEventListener('submit', function(e) {
         submitBtn.disabled = false;
     });
 });
-
 
 ///////////////////////////////////////////////////////////////////////////////////
 
