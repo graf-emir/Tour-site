@@ -1,14 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Автозаполнение инпута анкеты, если вернулись со второй страницы
-const urlParams = new URLSearchParams(window.location.search);
-const chosenTour = urlParams.get('tour');
-if (chosenTour && document.getElementById('itemName')) {
-    document.getElementById('itemName').value = chosenTour;
-}
-
     const container = document.getElementById('toursContainer');
     const template = document.getElementById('tourTemplate');
-    // НАХОДИМ НАШ DATALIST
     const datalist = document.getElementById('toursList');
 
     if (!container || !template) return;
@@ -18,34 +10,58 @@ if (chosenTour && document.getElementById('itemName')) {
     .then(data => {
         if (data.success && data.tours.length > 0) {
             container.innerHTML = ''; 
-            if (datalist) datalist.innerHTML = ''; // Очищаем старые подсказки, если были
+            if (datalist) datalist.innerHTML = '';
 
             data.tours.forEach(tour => {
-                // 1. Старый код отрисовки карточек в каталоге
+                // Создаем клон карточки из шаблона
                 const cardClone = template.content.cloneNode(true);
+                
+                // Заполняем данные карточки
                 cardClone.querySelector('.nameTour').innerText = tour.name;
                 cardClone.querySelector('.tourDate').innerText = tour.date;
                 const img = cardClone.querySelector('.tourImg');
                 img.src = tour.image;
                 img.alt = `Фото тура: ${tour.name}`;
-                container.appendChild(cardClone);
 
-                // 2. НОВЫЙ КОД: Создаем подсказку для анкеты в подвале
+                // --- ВОТ СЮДА НАДО ПЕРЕНЕСТИ ЭТОТ КУСОК КОДА ---
+                const readMoreBtn = cardClone.querySelector('.readMore');
+                if (readMoreBtn) {
+                    if (readMoreBtn.tagName === 'A') {
+                        readMoreBtn.href = `tour-details.html?id=${tour.id}`;
+                    } else {
+                        readMoreBtn.addEventListener('click', () => {
+                            window.location.href = `tour-details.html?id=${tour.id}`;
+                        });
+                    }
+                }
+                // ----------------------------------------------
+
+                // Добавляем подсказку для анкеты
                 if (datalist) {
                     const option = document.createElement('option');
-                    option.value = tour.name; // Записываем название тура из Airtable в подсказку
+                    option.value = tour.name;
                     datalist.appendChild(option);
                 }
+
+                // Добавляем готовую карточку на главную страницу
+                container.appendChild(cardClone);
             });
         } else {
-            container.innerHTML = '<p>На данный момент active туров нет.</p>';
+            container.innerHTML = '<p>На данный момент активных туров нет.</p>';
         }
     })
     .catch(error => {
         console.error('Ошибка загрузки каталога:', error);
-        container.innerHTML = '<p style="color: red;">Не удалось загрузить туры.</p>';
     });
+    
+    // Код автозаполнения анкеты (если вернулись со второй страницы)
+    const urlParams = new URLSearchParams(window.location.search);
+    const chosenTour = urlParams.get('tour');
+    if (chosenTour && document.getElementById('itemName')) {
+        document.getElementById('itemName').value = chosenTour;
+    }
 });
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -159,14 +175,3 @@ document.querySelector('.copy-phone-btn').addEventListener('click', function() {
 });
 
 ///////////////////////////////////////////////////////////////////
-
-// Заменяем поведение кнопки "Подробнее" в шаблоне главной страницы
-const readMoreBtn = cardClone.querySelector('.readMore');
-// Если это тег <a>, меняем href. Если это <button>, скрипт перенаправит по клику:
-if (readMoreBtn.tagName === 'A') {
-    readMoreBtn.href = `tour-details.html?id=${tour.id}`;
-} else {
-    readMoreBtn.addEventListener('click', () => {
-        window.location.href = `tour-details.html?id=${tour.id}`;
-    });
-}
