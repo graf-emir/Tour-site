@@ -154,7 +154,7 @@ a {
 .see-tours-btn {
   display: inline-block;
   padding: 6px 12px;
-  background-color: #166534;
+  background-color: #508259;
   color: #eff1ce;
   text-decoration: none;
   border-radius: 8px;
@@ -200,7 +200,7 @@ a {
 
 /* Карточка тура */
 .tourCard {
-  background-color: #3d674d;
+  background-color: #508259;
   border-radius: 60px;
   padding: 20px;
   width: 100%;
@@ -233,7 +233,7 @@ a {
 }
 
 .tourCard .readMore {
-  background-color: #fff3cd; /* Пастельно-голубой */
+  background: linear-gradient(45deg, #d3c15f 20%, #ccc58b, #d9c660 80%);
   color: #533f03;
   align-self: center;
   width: 50%;
