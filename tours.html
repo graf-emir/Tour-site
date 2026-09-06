@@ -3,17 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Tour Details - Endorphin Travel</title>
+  <link rel="stylesheet" href="style.css"> <!-- Используем тот же CSS -->
+  <!-- Подключаем новый отдельный скрипт для этой страницы -->
+  <script src="tour-details.js" defer></script> 
 </head>
-
-<header>
-  <h1>Hello</h1>
-</header>
 <body>
-  <div class="tours-info">
 
+  <div class="main">
+    <header class="details-header">
+      <a href="index.html" class="back-link">← На главную</a>
+      <h1 id="tourTitle">Загрузка названия...</h1>
+    </header>
+
+    <div class="tours-info">
+      <!-- Картинка тура -->
+      <div class="details-media">
+        <img id="tourImage" src="" alt="Photo">
+      </div>
+
+      <!-- Текстовый блок -->
+      <div class="details-content">
+        <p class="details-date">📅 <b>Дата поездки:</b> <span id="tourDate">...</span></p>
+        <p class="details-price">💰 <b>Стоимость:</b> <span id="tourPrice">...</span></p>
+        
+        <div class="details-description">
+          <h3>О туре:</h3>
+          <p id="tourDesc">...</p>
+        </div>
+
+        <!-- Кнопка бронирования, которая может вести на анкету -->
+        <a href="index.html#tgOrderForm" id="bookBtn" class="readMore">Забронировать тур</a>
+      </div>
+    </div>
   </div>
+
 </body>
-<footer>
-</footer>
 </html>

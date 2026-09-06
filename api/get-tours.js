@@ -30,20 +30,22 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     // Форматируем данные в простой и понятный для фронтенда вид
-        const tours = data.records.map(record => {
+    const tours = data.records.map(record => {
       const fields = record.fields;
       
-      // Безопасно достаем картинку: проверяем, что массив Image существует и в нем есть элементы
-      let imageUrl = 'placeholder.jpg'; // Картинка по умолчанию, если в базе пусто
+      let imageUrl = 'placeholder.jpg';
       if (fields.Image && Array.isArray(fields.Image) && fields.Image.length > 0) {
-        imageUrl = fields.Image[0].url; // Берем URL первой картинки из массива
+        imageUrl = fields.Image[0].url;
       }
 
       return {
-        id: record.id,
+        id: record.id, // ID записи нам критически важен для связи страниц!
         name: fields.Name || 'Без названия',
         image: imageUrl,
-        date: fields.Date || 'Дата уточняется'
+        date: fields.Date || 'Дата уточняется',
+        // ДОБАВИЛИ ДВА НОВЫХ ПОЛЯ:
+        description: fields.Description || 'Описание готовится...',
+        price: fields.Price || 'Цена по запросу'
       };
     });
 
