@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // Автозаполнение инпута анкеты, если вернулись со второй страницы
+const urlParams = new URLSearchParams(window.location.search);
+const chosenTour = urlParams.get('tour');
+if (chosenTour && document.getElementById('itemName')) {
+    document.getElementById('itemName').value = chosenTour;
+}
+
     const container = document.getElementById('toursContainer');
     const template = document.getElementById('tourTemplate');
     // НАХОДИМ НАШ DATALIST
@@ -150,3 +157,16 @@ document.querySelector('.copy-phone-btn').addEventListener('click', function() {
         console.error('Ошибка при копировании: ', err);
     });
 });
+
+///////////////////////////////////////////////////////////////////
+
+// Заменяем поведение кнопки "Подробнее" в шаблоне главной страницы
+const readMoreBtn = cardClone.querySelector('.readMore');
+// Если это тег <a>, меняем href. Если это <button>, скрипт перенаправит по клику:
+if (readMoreBtn.tagName === 'A') {
+    readMoreBtn.href = `tour-details.html?id=${tour.id}`;
+} else {
+    readMoreBtn.addEventListener('click', () => {
+        window.location.href = `tour-details.html?id=${tour.id}`;
+    });
+}
