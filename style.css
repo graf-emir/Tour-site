@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: #ffeeb7;
+  background-color: #fff9e6;
   color: #29513e; /* Темно-зеленый для хорошей читаемости текста */
   line-height: 1.6;
 }
@@ -64,7 +64,7 @@ a {
   justify-content: center; /* Центрирует текст внутри кнопки по горизонтали */
   align-items: center;     /* Центрирует текст внутри кнопки по вертикали */
   padding: 8px 4px;      /* Внутренние отступы кнопки */
-  background: linear-gradient(45deg, #b9a538 20%, #cbc37f, #b9a538 80%);
+  background: linear-gradient(45deg, #fdea85 20%, #fff9ca, #fdea85 80%);
   text-decoration: none;
   color: #333;
   border-radius: 6px;      /* Скругление углов */
@@ -88,8 +88,29 @@ a {
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
+.ihhheader {
+  position: relative;
+  min-height: 400px;
+  height: 51vh; /* Занимает 70% высоты экрана */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
 /* Контейнер для фоновых изображений */
 .header-bg-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.iheader-bg-slider {
   position: absolute;
   top: 0;
   left: 0;
@@ -126,6 +147,20 @@ a {
 
 /* Текстовый контент поверх фонового слайдера */
 .hhheader header {
+  position: relative;
+  z-index: 2;
+  background-color: #0f172aad;
+  padding: 30px 20px;
+  margin-top: -120px;
+  text-align: center;
+  border-radius: 20px;
+  max-width: 600px;
+  width: 90%;
+  backdrop-filter: blur(7px); /* Легкое размытие заднего фона для премиального вида */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.ihhheader header {
   position: relative;
   z-index: 2;
   background-color: #0f172aad;
@@ -274,7 +309,7 @@ a {
 .connectingBro .readMore {
   display: inline-block;
   padding: 10px 20px;
-  background: linear-gradient(45deg, #d3c15f 20%, #ccc58b, #d9c660 80%);;
+  background: linear-gradient(45deg, #f2e87c 20%, #fffbda, #f2e87c 80%);
   color: #533f03;
   text-decoration: none;
   border-radius: 5px;
@@ -411,7 +446,7 @@ a {
 }
 
 #submitBtn {
-  background: linear-gradient(45deg, #d3c15f 20%, #ccc58b, #d9c660 80%);;
+  background: linear-gradient(45deg, #f2e87c 20%, #fffbda, #f2e87c 80%);
   color: #533f03;
   font-size: 1rem;
   border-radius: 10px;
@@ -442,11 +477,6 @@ a {
   align-content: center;
 }
 
-.right {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  place-self: center;
-}
 
 .soc {
   place-self: center;

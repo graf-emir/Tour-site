@@ -175,3 +175,7 @@ document.querySelector('.copy-phone-btn').addEventListener('click', function() {
 });
 
 ///////////////////////////////////////////////////////////////////
+
+function copyEmail() {
+    navigator.clipboard.writeText('mememe@gmail.com');
+}
