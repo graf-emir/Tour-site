@@ -1,122 +1,105 @@
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('toursContainer');
     const template = document.getElementById('tourTemplate');
-    const input = document.getElementById('itemName');
-    const suggestionsContainer = document.getElementById('customSuggestions');
+    const inputElement = document.getElementById('itemName'); 
 
-    // Сюда собираем имена туров в любом случае
-    const tourNames = [];
+    if (!container || !template) return;
 
-    // Запускаем fetch всегда, независимо от того, есть карточки на странице или нет
+    // Контейнер для кастомных подсказок
+    let dropdownList = null;
+    if (inputElement) {
+        dropdownList = document.createElement('div');
+        dropdownList.className = 'custom-autocomplete-list';
+        inputElement.parentNode.insertBefore(dropdownList, inputElement.nextSibling);
+
+        // Показываем подсказки при клике / фокусе
+        inputElement.addEventListener('focus', showDropdown);
+        inputElement.addEventListener('input', showDropdown);
+
+        // Закрываем при клике вне поля
+        document.addEventListener('click', function(e) {
+            if (e.target !== inputElement && !dropdownList.contains(e.target)) {
+                dropdownList.style.display = 'none';
+            }
+        });
+    }
+
+    function showDropdown() {
+        if (!dropdownList) return;
+        const value = inputElement.value.toLowerCase();
+        const items = dropdownList.querySelectorAll('.autocomplete-item');
+        let hasMatches = false;
+
+        items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(value)) {
+                item.style.display = 'block';
+                hasMatches = true;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        dropdownList.style.display = hasMatches ? 'block' : 'none';
+    }
+
     fetch('/api/get-tours')
     .then(response => response.json())
     .then(data => {
         if (data.success && data.tours.length > 0) {
-            
-            // 1. Отрисовка карточек (сработает ТОЛЬКО если они есть на этой странице)
-            if (container && template) {
-                container.innerHTML = ''; 
-                data.tours.forEach(tour => {
-                    const cardClone = template.content.cloneNode(true);
-                    cardClone.querySelector('.nameTour').innerText = tour.name;
-                    cardClone.querySelector('.tourDate').innerText = tour.date;
-                    const img = cardClone.querySelector('.tourImg');
-                    img.src = tour.image;
-                    img.alt = `Фото тура: ${tour.name}`;
+            container.innerHTML = ''; 
+            if (dropdownList) dropdownList.innerHTML = '';
 
-                    const readMoreBtn = cardClone.querySelector('.readMore');
-                    if (readMoreBtn) {
-                        if (readMoreBtn.tagName === 'A') {
-                            readMoreBtn.href = `tour-details.html?id=${tour.id}`;
-                        } else {
-                            readMoreBtn.addEventListener('click', () => {
-                                window.location.href = `tour-details.html?id=${tour.id}`;
-                            });
-                        }
-                    }
-                    container.appendChild(cardClone);
-                });
-            }
-
-            // 2. Наполняем массив имен туров для нашей формы в футере (сработает всегда)
             data.tours.forEach(tour => {
-                tourNames.push(tour.name);
+                // Код отрисовки карточек Airtable остался без изменений
+                const cardClone = template.content.cloneNode(true);
+                
+                cardClone.querySelector('.nameTour').innerText = tour.name;
+                cardClone.querySelector('.tourDate').innerText = tour.date;
+                const img = cardClone.querySelector('.tourImg');
+                img.src = tour.image;
+                img.alt = `Фото тура: ${tour.name}`;
+
+                const readMoreBtn = cardClone.querySelector('.readMore');
+                if (readMoreBtn) {
+                    if (readMoreBtn.tagName === 'A') {
+                        readMoreBtn.href = `tour-details.html?id=${tour.id}`;
+                    } else {
+                        readMoreBtn.addEventListener('click', () => {
+                            window.location.href = `tour-details.html?id=${tour.id}`;
+                        });
+                    }
+                }
+
+                container.appendChild(cardClone);
+
+                // Заполнение кастомного списка подсказок
+                if (dropdownList) {
+                    const item = document.createElement('div');
+                    item.className = 'autocomplete-item';
+                    item.textContent = tour.name;
+                    item.addEventListener('click', function() {
+                        inputElement.value = tour.name;
+                        dropdownList.style.display = 'none';
+                    });
+                    dropdownList.appendChild(item);
+                }
             });
-
-            // 3. Включаем автозаполнение
-            initCustomAutocomplete();
-
         } else {
-            if (container) {
-                container.innerHTML = '<p>На данный момент активных туров нет.</p>';
-            }
+            container.innerHTML = '<p>На данный момент активных туров нет.</p>';
         }
     })
     .catch(error => {
         console.error('Ошибка загрузки каталога:', error);
     });
     
-    // Логика работы подсказок
-    function initCustomAutocomplete() {
-        if (!input || !suggestionsContainer) return;
-
-        const showSuggestions = (value) => {
-            const query = value.toLowerCase().trim();
-            suggestionsContainer.innerHTML = '';
-            
-            if (!query) {
-                suggestionsContainer.style.display = 'none';
-                return;
-            }
-
-            const filteredTours = tourNames.filter(name => name.toLowerCase().includes(query));
-
-            if (filteredTours.length > 0) {
-                filteredTours.forEach(tourName => {
-                    const item = document.createElement('div');
-                    item.className = 'suggestion-item';
-                    item.textContent = tourName;
-                    
-                    // Функция выбора
-                    const selectTour = (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        input.value = tourName;
-                        suggestionsContainer.style.display = 'none';
-                    };
-                    
-                    // Важно для мобилок: вешаем и на клик, и на тач
-                    item.addEventListener('mousedown', selectTour); 
-                    item.addEventListener('touchstart', selectTour);
-                    
-                    suggestionsContainer.appendChild(item);
-                });
-                suggestionsContainer.style.display = 'block';
-            } else {
-                suggestionsContainer.style.display = 'none';
-            }
-        };
-
-        input.addEventListener('input', (e) => showSuggestions(e.target.value));
-        input.addEventListener('focus', (e) => showSuggestions(e.target.value));
-
-        // Закрытие при клике мимо
-        document.addEventListener('click', (e) => {
-            if (e.target !== input && e.target !== suggestionsContainer) {
-                suggestionsContainer.style.display = 'none';
-            }
-        });
-    }
-
-    // Параметры из URL (если пришли по ссылке "Хочу этот тур")
+    // Код автозаполнения анкеты
     const urlParams = new URLSearchParams(window.location.search);
     const chosenTour = urlParams.get('tour');
-    if (chosenTour && input) {
-        input.value = chosenTour;
+    if (chosenTour && inputElement) {
+        inputElement.value = chosenTour;
     }
 });
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////
 

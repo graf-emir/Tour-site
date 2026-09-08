@@ -96,12 +96,9 @@
         <form id="tgOrderForm" class="footer-form">
           <div class="form-field">
             <!-- ДОБАВЛЕН атрибут list="toursList" -->
-            <div class="autocomplete-wrapper" style="position: relative;">
-              <input type="text" id="itemName" placeholder="Выберите тур" autocomplete="off">
-              <!-- Кастомный контейнер для подсказок вместо datalist -->
-              <div id="customSuggestions" class="suggestions-list" style="display: none; position: absolute; width: 100%; z-index: 1000;"></div>
-            </div>
-
+            <input type="text" id="itemName" placeholder="Name of Tour, or describe your tour" list="toursList" required>
+            <!-- САМ СПИСОК ПОДСКАЗОК (изначально пустой, JS его заполнит) -->
+            <datalist id="toursList"></datalist>
           </div>
 
           <div class="form-field">
@@ -127,7 +124,7 @@
         
         <a href="" class="soc">tg</a>
         <div class="footer-email-container">
-          <a href="mailto:mememe@gmail.com" class="email-link">eeeee@gmail.com</a>
+          <a href="mailto:mememe@gmail.com" class="email-link">mememe@gmail.com</a>
           <button onclick="copyEmail()" class="copy-btn" title="Скопировать email">📋</button>
         </div>
 
