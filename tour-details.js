@@ -24,11 +24,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 // ====== СБОРКА СЛАЙДЕРА ГАЛЕРЕИ ======
                 const slidesContainer = document.getElementById('slidesContainer');
                 
-                // Если в галерее пусто, используем главную картинку тура как единственный слайд
-                const imagesToRender = currentTour.gallery.length > 0 ? currentTour.gallery : [currentTour.image];
+                // ИСПРАВЛЕНО: Безопасная проверка. Если галерея существует и это массив с элементами — берем её. 
+                // Если галерея пустая (undefined), создаем массив из одной главной картинки.
+                const imagesToRender = (currentTour.gallery && Array.isArray(currentTour.gallery) && currentTour.gallery.length > 0) 
+                    ? currentTour.gallery 
+                    : [currentTour.image];
 
                 imagesToRender.forEach((imgUrl, index) => {
                     const slideDiv = document.createElement('div');
+                    // Если индекс равен 0, слайд сразу будет видимым (slide-active)
                     slideDiv.className = `details-slide ${index === 0 ? 'slide-active' : ''}`;
                     
                     const img = document.createElement('img');
@@ -41,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Инициализируем управление стрелками
                 initDetailsSlider(imagesToRender.length);
+
 
             } else {
                 document.getElementById('tourTitle').innerText = 'Тур не найден';
