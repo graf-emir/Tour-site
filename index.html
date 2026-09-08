@@ -96,9 +96,12 @@
         <form id="tgOrderForm" class="footer-form">
           <div class="form-field">
             <!-- ДОБАВЛЕН атрибут list="toursList" -->
-            <input type="text" id="itemName" placeholder="Name of Tour, or describe your tour" list="toursList" required>
-            <!-- САМ СПИСОК ПОДСКАЗОК (изначально пустой, JS его заполнит) -->
-            <datalist id="toursList"></datalist>
+            <div class="autocomplete-wrapper" style="position: relative;">
+              <input type="text" id="itemName" placeholder="Выберите тур" autocomplete="off">
+              <!-- Кастомный контейнер для подсказок вместо datalist -->
+              <div id="customSuggestions" class="suggestions-list" style="display: none; position: absolute; width: 100%; z-index: 1000;"></div>
+            </div>
+
           </div>
 
           <div class="form-field">

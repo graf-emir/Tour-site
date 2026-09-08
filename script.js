@@ -1,18 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('toursContainer');
     const template = document.getElementById('tourTemplate');
-    const datalist = document.getElementById('toursList');
+    const input = document.getElementById('itemName');
+    
+    // Вместо datalist теперь ищем наш новый кастомный контейнер для подсказок
+    const suggestionsContainer = document.getElementById('customSuggestions');
 
     if (!container || !template) return;
+
+    // Сюда будем собирать имена туров для поиска по ним
+    const tourNames = [];
 
     fetch('/api/get-tours')
     .then(response => response.json())
     .then(data => {
         if (data.success && data.tours.length > 0) {
             container.innerHTML = ''; 
-            if (datalist) datalist.innerHTML = '';
+            if (suggestionsContainer) suggestionsContainer.innerHTML = '';
 
             data.tours.forEach(tour => {
+                // СОХРАНЯЕМ ИМЯ ТУРА ДЛЯ АВТОЗАПОЛНЕНИЯ (Airtable не ломается)
+                tourNames.push(tour.name);
+
                 // Создаем клон карточки из шаблона
                 const cardClone = template.content.cloneNode(true);
                 
@@ -23,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 img.src = tour.image;
                 img.alt = `Фото тура: ${tour.name}`;
 
-                // --- ВОТ СЮДА НАДО ПЕРЕНЕСТИ ЭТОТ КУСОК КОДА ---
                 const readMoreBtn = cardClone.querySelector('.readMore');
                 if (readMoreBtn) {
                     if (readMoreBtn.tagName === 'A') {
@@ -34,18 +42,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
                     }
                 }
-                // ----------------------------------------------
-
-                // Добавляем подсказку для анкеты
-                if (datalist) {
-                    const option = document.createElement('option');
-                    option.value = tour.name;
-                    datalist.appendChild(option);
-                }
 
                 // Добавляем готовую карточку на главную страницу
                 container.appendChild(cardClone);
             });
+
+            // ЗАПУСКАЕМ НАШЕ КАСТОМНОЕ АВТОЗАПОЛНЕНИЕ ПОСЛЕ ЗАГРУЗКИ ТУРОВ
+            initCustomAutocomplete();
+
         } else {
             container.innerHTML = '<p>На данный момент активных туров нет.</p>';
         }
@@ -54,11 +58,63 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Ошибка загрузки каталога:', error);
     });
     
+    // Функция, которая рулит подсказками и не пропадает на телефонах
+    function initCustomAutocomplete() {
+        if (!input || !suggestionsContainer) return;
+
+        const showSuggestions = (value) => {
+            const query = value.toLowerCase().trim();
+            suggestionsContainer.innerHTML = '';
+            
+            if (!query) {
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+
+            // Ищем совпадения по сохраненным именам
+            const filteredTours = tourNames.filter(name => name.toLowerCase().includes(query));
+
+            if (filteredTours.length > 0) {
+                filteredTours.forEach(tourName => {
+                    const item = document.createElement('div');
+                    item.className = 'suggestion-item';
+                    item.textContent = tourName;
+                    
+                    // Клик или тап пальцем по подсказке
+                    const selectTour = (e) => {
+                        e.preventDefault();
+                        input.value = tourName;
+                        suggestionsContainer.style.display = 'none';
+                    };
+                    
+                    item.addEventListener('click', selectTour);
+                    item.addEventListener('touchend', selectTour);
+                    
+                    suggestionsContainer.appendChild(item);
+                });
+                suggestionsContainer.style.display = 'block';
+            } else {
+                suggestionsContainer.style.display = 'none';
+            }
+        };
+
+        // Слушаем ввод и фокус на инпуте
+        input.addEventListener('input', (e) => showSuggestions(e.target.value));
+        input.addEventListener('focus', (e) => showSuggestions(e.target.value));
+
+        // Закрываем список, если кликнули мимо инпута
+        document.addEventListener('click', (e) => {
+            if (e.target !== input && e.target !== suggestionsContainer) {
+                suggestionsContainer.style.display = 'none';
+            }
+        });
+    }
+
     // Код автозаполнения анкеты (если вернулись со второй страницы)
     const urlParams = new URLSearchParams(window.location.search);
     const chosenTour = urlParams.get('tour');
-    if (chosenTour && document.getElementById('itemName')) {
-        document.getElementById('itemName').value = chosenTour;
+    if (chosenTour && input) {
+        input.value = chosenTour;
     }
 });
 
