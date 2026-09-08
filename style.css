@@ -297,10 +297,43 @@ span {
   align-self: center;
   width: 50%;
   padding: 15px;
+  cursor: pointer;
+
+  /* Сброс системных стилей и синей вспышки на смартфонах */
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  /* Базовый масштаб и плавные переходы */
+  transform: scale(1);
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-.tourCard .readMore:hover {
-  background-color: #bee5eb;
+/* Эффект наведения — ТОЛЬКО для ПК с мышкой */
+@media (hover: hover) {
+  .tourCard .readMore:hover {
+    filter: brightness(1.05);
+    transform: scale(1.03);
+  }
+}
+
+/* Класс с микро-анимацией сжатия для тапа/клика */
+.tourCard .readMore.clicked {
+  animation: cardBtnBounce 0.25s ease;
+}
+
+/* Анимация "прогиба" кнопки */
+@keyframes cardBtnBounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.93);
+    filter: brightness(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* ==========================================

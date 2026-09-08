@@ -190,15 +190,14 @@ function copyEmail() {
 ///////////////////////////////////////////////////////////////////
 
 document.addEventListener('DOMContentLoaded', () => {
-  const submitBtn = document.getElementById('submitBtn');
+  // Перечисляем все нужные кнопки через запятую
+  const allBtns = document.querySelectorAll('#submitBtn, .tourCard .readMore, .copy-btn');
 
-  if (submitBtn) {
-    submitBtn.addEventListener('click', function () {
-      // Перезапускаем анимацию при каждом клике/тапе
+  allBtns.forEach((btn) => {
+    btn.addEventListener('click', function () {
       this.classList.remove('clicked');
-      // Маленький хак для перезапуска CSS-анимации
-      void this.offsetWidth; 
+      void this.offsetWidth; // Хак для перезапуска анимации
       this.classList.add('clicked');
     });
-  }
+  });
 });
