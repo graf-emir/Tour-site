@@ -1,15 +1,12 @@
 export default async function handler(req, res) {
-  // Разрешаем только GET запросы
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Метод не поддерживается' });
   }
 
-  // Достаем секреты Airtable из настроек Vercel
-  const AIRTABLE_PAT = process.env.AIRTABLE_PAT; // Ваш Personal Access Token
-  const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID; // ID базы данных
-  const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME || 'Table 1'; // Имя таблицы
+  const AIRTABLE_PAT = process.env.AIRTABLE_PAT; 
+  const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID; 
+  const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME || 'Table 1'; 
 
-  // URL для запроса к Airtable API
   const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
 
   try {
@@ -24,31 +21,36 @@ export default async function handler(req, res) {
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Ошибка Airtable API:', errorData);
-      return res.status(500).json({ success: false, message: 'Ошибка получения данных из Airtable' });
+      return res.status(500).json({ success: false, message: 'Ошибка Airtable' });
     }
 
     const data = await response.json();
 
-    // Форматируем данные в простой и понятный для фронтенда вид
     const tours = data.records.map(record => {
       const fields = record.fields;
       
+      // 1. Достаем главную превью-картинку
       let imageUrl = 'placeholder.jpg';
       if (fields.Image && Array.isArray(fields.Image) && fields.Image.length > 0) {
-        imageUrl = fields.Image[0].url;
+        imageUrl = fields.Image[0].url; // Специфика Airtable: берем url первого элемента
+      }
+
+      // 2. ИСПРАВЛЕНО: Правильно вытаскиваем ВСЕ урлы из поля Gallery
+      let galleryUrls = [];
+      if (fields.Gallery && Array.isArray(fields.Gallery) && fields.Gallery.length > 0) {
+        galleryUrls = fields.Gallery.map(item => item.url);
       }
 
       return {
-        id: record.id, // ID записи нам критически важен для связи страниц!
+        id: record.id,
         name: fields.Name || 'Без названия',
         image: imageUrl,
         date: fields.Date || 'Дата уточняется',
-        // ДОБАВИЛИ ДВА НОВЫХ ПОЛЯ:
         description: fields.Description || 'Описание готовится...',
-        price: fields.Price || 'Цена по запросу'
+        price: fields.Price || 'Цена по запросу',
+        gallery: galleryUrls // Передаем собранный список ссылок во фронтенд
       };
     });
-
 
     return res.status(200).json({ success: true, tours: tours });
   } catch (error) {
@@ -56,3 +58,4 @@ export default async function handler(req, res) {
     return res.status(500).json({ success: false, message: 'Ошибка сервера' });
   }
 }
+
