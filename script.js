@@ -186,3 +186,19 @@ document.querySelector('.copy-phone-btn').addEventListener('click', function() {
 function copyEmail() {
     navigator.clipboard.writeText('mememe@gmail.com');
 }
+
+///////////////////////////////////////////////////////////////////
+
+document.addEventListener('DOMContentLoaded', () => {
+  const submitBtn = document.getElementById('submitBtn');
+
+  if (submitBtn) {
+    submitBtn.addEventListener('click', function () {
+      // Перезапускаем анимацию при каждом клике/тапе
+      this.classList.remove('clicked');
+      // Маленький хак для перезапуска CSS-анимации
+      void this.offsetWidth; 
+      this.classList.add('clicked');
+    });
+  }
+});

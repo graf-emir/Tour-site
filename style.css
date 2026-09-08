@@ -1,6 +1,14 @@
 /* ==========================================
    1. БАЗОВЫЕ НАСТРОЙКИ, ШРИФТЫ И КНОПКИ
    ========================================== */
+
+/* Отключаем синее выделение при тапе на смартфонах */
+a, button, input, textarea {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none; /* Запрещает случайное выделение текста кнопки пальцем */
+}
+
 *  {
   margin: 0;
   padding: 0;
@@ -29,7 +37,7 @@ a {
   background-color: #fff3cd;
   color: #533f03;
   font-size: 1rem;
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 5px;
   margin: 10px 0;
 }
@@ -38,7 +46,7 @@ span {
   background-color: #fff3cd;
   color: #533f03;
   font-size: 1rem;
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 5px;
   margin: 10px 0;
 }
@@ -77,11 +85,19 @@ span {
   color: #333;
   border-radius: 6px;      /* Скругление углов */
   text-align: center;      /* Для длинного текста, если перенесется */
-  transition: background-color 0.3s ease;
+
+  transition: transform 0.4s ease, filter 0.4s ease;
+  transform: scale(1);
+  filter: brightness(1); /* Исходная 100% яркость */
 }
 
 .nav-tab:hover {
   background-color: #166534;
+  /* Плавное увеличение */
+  transform: scale(1.03);
+
+  /* Затемняем градиент на 20% (оставляем 80% яркости) */
+  filter: brightness(0.7);
 }
 
 .hhheader {
@@ -205,11 +221,11 @@ span {
   transition: 0.4s;
   cursor: pointer;
   text-decoration: none;
-  border: 2px solid #ffeeba;
+  border: 2px solid #508259;
 }
 
 .see-tours-btn:hover {
-  background-color: #c3e6cb;
+  background-color: #436b4a;
   transition: 0.4s;
 }
 
@@ -322,7 +338,18 @@ span {
   text-decoration: none;
   border-radius: 5px;
   font-weight: bold; /* ИЗМЕНЕНО: Значение font-family: bold было неверным, нужно font-weight */
-  transition: 0.4s;
+  
+  transition: transform 0.4s ease, filter 0.4s ease;
+  transform: scale(1);
+  filter: brightness(1); /* Исходная 100% яркость */
+}
+
+.connectingBro .readMore:hover {
+  /* Плавное увеличение */
+  transform: scale(1.03);
+
+  /* Затемняем градиент на 20% (оставляем 80% яркости) */
+  filter: brightness(0.8);
 }
 
 .connectingBro .readMore:hover {
@@ -458,13 +485,43 @@ span {
   color: #533f03;
   font-size: 1rem;
   border-radius: 10px;
+  border: 1px solid #508259;
   padding: 15px;
   margin-top: 10px;
+  cursor: pointer;
+
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  transform: scale(1);
+  transition: transform 0.2s ease;
 }
 
-#submitBtn:hover {
-  background-color: #ffeeba;
-  transform: scale(1.02);
+/* Ховер оставляем только для ПК */
+@media (hover: hover) {
+  #submitBtn:hover {
+    transform: scale(1.02);
+  }
+}
+
+/* Класс с быстрой анимацией клика для телефона и ПК */
+#submitBtn.clicked {
+  animation: tapBounce 0.25s ease;
+}
+
+/* Описываем сам "всплеск": сжатие -> быстрое возвращение */
+@keyframes tapBounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.92); /* Кнопка красиво прогибается */
+    filter: brightness(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .status-message {
@@ -477,6 +534,7 @@ span {
   grid-template-columns: 1fr 2fr;
   grid-template-rows: auto auto;
   gap: 15px;
+  line-height: 2.3;
   background-color: #2c4c38;
   padding: 25px;
   text-align: center;
@@ -562,16 +620,45 @@ a.email-link:hover {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
+  padding: 8.4px 24px;
   border: 1px solid #fff3cd;
   border-radius: 6px;
   background-color: #fff3cd;
   cursor: pointer;
-  /* Указываем базовый цвет для текста и иконки */
   color: #24292f;
   font-size: 14px;
   font-weight: 500;
-  transition: all 0.2s ease;
+  
+  /* Исходный масштаб */
+  transform: scale(1);
+  
+  /* Плавный переход для цвета, рамки и размера */
+  transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* 1. Эффект наведения — ТОЛЬКО для ПК с мышкой (не будет "залипать" на телефонах) */
+@media (hover: hover) {
+  .copy-btn:hover {
+    background-color: #71a2db;
+    border-color: #71a2db;
+    color: #ffffff;
+    
+    /* Плавное увеличение */
+    transform: scale(1.08); 
+  }
+}
+
+/* 2. Эффект мгновенного нажатия — работает и на ПК, и на мобильных */
+.copy-btn:active {
+  background-color: #5587be; /* Чуть темнее при самом клике/тапе */
+  border-color: #5587be;
+  color: #ffffff;
+  
+  /* Кнопка сжимается под пальцем */
+  transform: scale(0.95);
+  
+  /* Быстрая реакция при нажатии */
+  transition: transform 0.1s ease, background-color 0.1s ease;
 }
 
 .copy-icon {
@@ -580,19 +667,6 @@ a.email-link:hover {
   /* Иконка принимает цвет текста кнопки */
   fill: currentColor;
 }
-
-/* Изменение цвета кнопки и иконки при наведении */
-.copy-btn:hover {
-  background-color: #71a2db;
-  border-color: #71a2db;
-  color: #ffffff;
-}
-
-/* Эффект нажатия */
-.copy-btn:active {
-  transform: scale(0.98);
-}
-
 
 .contact-item {
   align-self: center;
