@@ -2,63 +2,61 @@ document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('toursContainer');
     const template = document.getElementById('tourTemplate');
     const input = document.getElementById('itemName');
-    
-    // Вместо datalist теперь ищем наш новый кастомный контейнер для подсказок
     const suggestionsContainer = document.getElementById('customSuggestions');
 
-    if (!container || !template) return;
-
-    // Сюда будем собирать имена туров для поиска по ним
+    // Сюда собираем имена туров в любом случае
     const tourNames = [];
 
+    // Запускаем fetch всегда, независимо от того, есть карточки на странице или нет
     fetch('/api/get-tours')
     .then(response => response.json())
     .then(data => {
         if (data.success && data.tours.length > 0) {
-            container.innerHTML = ''; 
-            if (suggestionsContainer) suggestionsContainer.innerHTML = '';
+            
+            // 1. Отрисовка карточек (сработает ТОЛЬКО если они есть на этой странице)
+            if (container && template) {
+                container.innerHTML = ''; 
+                data.tours.forEach(tour => {
+                    const cardClone = template.content.cloneNode(true);
+                    cardClone.querySelector('.nameTour').innerText = tour.name;
+                    cardClone.querySelector('.tourDate').innerText = tour.date;
+                    const img = cardClone.querySelector('.tourImg');
+                    img.src = tour.image;
+                    img.alt = `Фото тура: ${tour.name}`;
 
-            data.tours.forEach(tour => {
-                // СОХРАНЯЕМ ИМЯ ТУРА ДЛЯ АВТОЗАПОЛНЕНИЯ (Airtable не ломается)
-                tourNames.push(tour.name);
-
-                // Создаем клон карточки из шаблона
-                const cardClone = template.content.cloneNode(true);
-                
-                // Заполняем данные карточки
-                cardClone.querySelector('.nameTour').innerText = tour.name;
-                cardClone.querySelector('.tourDate').innerText = tour.date;
-                const img = cardClone.querySelector('.tourImg');
-                img.src = tour.image;
-                img.alt = `Фото тура: ${tour.name}`;
-
-                const readMoreBtn = cardClone.querySelector('.readMore');
-                if (readMoreBtn) {
-                    if (readMoreBtn.tagName === 'A') {
-                        readMoreBtn.href = `tour-details.html?id=${tour.id}`;
-                    } else {
-                        readMoreBtn.addEventListener('click', () => {
-                            window.location.href = `tour-details.html?id=${tour.id}`;
-                        });
+                    const readMoreBtn = cardClone.querySelector('.readMore');
+                    if (readMoreBtn) {
+                        if (readMoreBtn.tagName === 'A') {
+                            readMoreBtn.href = `tour-details.html?id=${tour.id}`;
+                        } else {
+                            readMoreBtn.addEventListener('click', () => {
+                                window.location.href = `tour-details.html?id=${tour.id}`;
+                            });
+                        }
                     }
-                }
+                    container.appendChild(cardClone);
+                });
+            }
 
-                // Добавляем готовую карточку на главную страницу
-                container.appendChild(cardClone);
+            // 2. Наполняем массив имен туров для нашей формы в футере (сработает всегда)
+            data.tours.forEach(tour => {
+                tourNames.push(tour.name);
             });
 
-            // ЗАПУСКАЕМ НАШЕ КАСТОМНОЕ АВТОЗАПОЛНЕНИЕ ПОСЛЕ ЗАГРУЗКИ ТУРОВ
+            // 3. Включаем автозаполнение
             initCustomAutocomplete();
 
         } else {
-            container.innerHTML = '<p>На данный момент активных туров нет.</p>';
+            if (container) {
+                container.innerHTML = '<p>На данный момент активных туров нет.</p>';
+            }
         }
     })
     .catch(error => {
         console.error('Ошибка загрузки каталога:', error);
     });
     
-    // Функция, которая рулит подсказками и не пропадает на телефонах
+    // Логика работы подсказок
     function initCustomAutocomplete() {
         if (!input || !suggestionsContainer) return;
 
@@ -71,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Ищем совпадения по сохраненным именам
             const filteredTours = tourNames.filter(name => name.toLowerCase().includes(query));
 
             if (filteredTours.length > 0) {
@@ -80,15 +77,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     item.className = 'suggestion-item';
                     item.textContent = tourName;
                     
-                    // Клик или тап пальцем по подсказке
+                    // Функция выбора
                     const selectTour = (e) => {
                         e.preventDefault();
+                        e.stopPropagation();
                         input.value = tourName;
                         suggestionsContainer.style.display = 'none';
                     };
                     
-                    item.addEventListener('click', selectTour);
-                    item.addEventListener('touchend', selectTour);
+                    // Важно для мобилок: вешаем и на клик, и на тач
+                    item.addEventListener('mousedown', selectTour); 
+                    item.addEventListener('touchstart', selectTour);
                     
                     suggestionsContainer.appendChild(item);
                 });
@@ -98,11 +97,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
 
-        // Слушаем ввод и фокус на инпуте
         input.addEventListener('input', (e) => showSuggestions(e.target.value));
         input.addEventListener('focus', (e) => showSuggestions(e.target.value));
 
-        // Закрываем список, если кликнули мимо инпута
+        // Закрытие при клике мимо
         document.addEventListener('click', (e) => {
             if (e.target !== input && e.target !== suggestionsContainer) {
                 suggestionsContainer.style.display = 'none';
@@ -110,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Код автозаполнения анкеты (если вернулись со второй страницы)
+    // Параметры из URL (если пришли по ссылке "Хочу этот тур")
     const urlParams = new URLSearchParams(window.location.search);
     const chosenTour = urlParams.get('tour');
     if (chosenTour && input) {
