@@ -32,7 +32,15 @@ a {
   border-radius: 10px;
   padding: 5px;
   margin: 10px 0;
+}
 
+span {
+  background-color: #fff3cd;
+  color: #533f03;
+  font-size: 1rem;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px 0;
 }
 
 /* ==========================================
@@ -466,13 +474,11 @@ a {
 
 .footerInfo {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   grid-template-rows: auto auto;
   gap: 15px;
   background-color: #2c4c38;
-  border-radius: 20px;
-  margin: 20px 0px;
-  padding: 15px;
+  padding: 25px;
   text-align: center;
   align-content: center;
 }
@@ -480,24 +486,131 @@ a {
 
 .soc {
   place-self: center;
-  max-width: 130px;
-  min-width: 120px;
-  min-height: 50px;
-  border-radius: 50px;
+  min-width: 60px;
+  min-height: 60px;
+  border-radius: 20px;
+  line-height: 1;
 }
+
+.insta-link {
+  display: inline-block;
+  width: 32px;  /* Ширина иконки */
+  height: 32px; /* Высота иконки */
+}
+
+.inst svg {
+  fill: #cc5dce; /* Ваш цвет иконки по умолчанию (например, серый) */
+  transition: fill 0.3s ease; /* Плавный переход цвета */
+}
+
+/* Цвет при наведении мыши */
+.inst:hover svg {
+  fill: #a740a9; /* Например, фирменный цвет Инсты или любой ваш */
+}
+
+.tg{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  /* Укажите любой нужный цвет по умолчанию */
+  color: #24A1DE; 
+  transition: color 0.3s ease;
+}
+
+.tg-icon {
+  /* SVG заимствует цвет текста родителя благодаря currentColor */
+  fill: currentColor; 
+}
+
+/* Изменение цвета при наведении */
+.tg:hover {
+  color: #0088cc; 
+}
+
+
+
 
 .footerInfo p{
   color: #fff3cd;
 }
 
-.copy-phone-btn {
-  background-color: #fff3cd;
-  color: #533f03;
-  font-size: 1rem;
-  border-radius: 10px;
-  padding: 5px;
-  margin: 10px 0;
+.footer-title {
+  /* Заставляет элемент занять ВСЕ колонки сетки */
+  grid-column: 1 / -1; 
+  
+  margin: 0;
+  color: #fff9e6;
+  font-size: 1.5rem;
+  text-align: center; /* Выравнивание по центру */
+}
 
+a.email-link{
+  font-size: 20px;
+  text-decoration: none;
+}
+
+a.email-link:hover {
+  text-decoration: underline;
+}
+
+.footer-email-container {
+  align-self: center;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid #fff3cd;
+  border-radius: 6px;
+  background-color: #fff3cd;
+  cursor: pointer;
+  /* Указываем базовый цвет для текста и иконки */
+  color: #24292f;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.copy-icon {
+  width: 18px;
+  height: 18px;
+  /* Иконка принимает цвет текста кнопки */
+  fill: currentColor;
+}
+
+/* Изменение цвета кнопки и иконки при наведении */
+.copy-btn:hover {
+  background-color: #71a2db;
+  border-color: #71a2db;
+  color: #ffffff;
+}
+
+/* Эффект нажатия */
+.copy-btn:active {
+  transform: scale(0.98);
+}
+
+
+.contact-item {
+  align-self: center;
+}
+
+.phone-link {
+  color: #533f03;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.phone-link:hover {
+  text-decoration: underline;
+}
+
+/* Изменение стиля кнопки при успешном копировании */
+.copy-phone-btn.copied {
+  color: #4caf50; /* Зеленый цвет при копировании */
 }
 
 

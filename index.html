@@ -91,48 +91,70 @@
 
 
     <footer class="site-footer">
-<div class="footer-container">
-  <h3>Select tour/ Custom tour</h3>
-  <form id="tgOrderForm" class="footer-form" autocomplete="off">
-    
-    <div class="form-field" style="position: relative;">
-      <input type="text" id="itemName" placeholder="Name of Tour, or describe your tour" autocomplete="new-password" required>
-      <!-- Контейнер для подсказок добавится скриптом автоматически -->
-    </div>
+  <div class="footer-container">
+    <h3>Select tour/ Custom tour</h3>
+    <form id="tgOrderForm" class="footer-form" autocomplete="off">
+      
+      <div class="form-field" style="position: relative;">
+        <input type="text" id="itemName" placeholder="Name of Tour, or describe your tour" autocomplete="new-password" required>
+        <!-- Контейнер для подсказок добавится скриптом автоматически -->
+      </div>
 
-    <div class="form-field">
-      <input type="text" id="userName" placeholder="Your name" autocomplete="name" required>
-    </div>
-    <div class="form-field">
-      <input type="email" id="userEmail" placeholder="Your email" autocomplete="email" required>
-    </div>
-    <div class="form-field">
-      <input type="tel" id="userPhone" placeholder="Phone (Telegram/ WhatsApp)" autocomplete="tel" required>
-    </div>
-    <button type="submit" id="submitBtn">Submit</button>
-    <p id="formStatus" class="status-message"></p>
-  </form>
+      <div class="form-field">
+        <input type="text" id="userName" placeholder="Your name" autocomplete="name" required>
+      </div>
+      <div class="form-field">
+        <input type="email" id="userEmail" placeholder="Your email" autocomplete="email" required>
+      </div>
+      <div class="form-field">
+        <input type="tel" id="userPhone" placeholder="Phone (Telegram/ WhatsApp)" autocomplete="tel" required>
+      </div>
+      <button type="submit" id="submitBtn">Submit</button>
+      <p id="formStatus" class="status-message"></p>
+    </form>
+  </div>
 </div>
 
-      <div class="footerInfo">
-        <a href="" class="soc">inst</a>
-        <p>contact phone number <br>
-          <button class="copy-phone-btn" data-phone="+12345678900">
-            +123 456 78900
-          </button></p>
-        
-        <a href="" class="soc">tg</a>
-        <div class="footer-email-container">
-          <a href="mailto:mememe@gmail.com" class="email-link">mememe@gmail.com</a>
-          <button onclick="copyEmail()" class="copy-btn" title="Скопировать email">📋</button>
-        </div>
-
-
-
-      </div>
-    </footer>
-
+<div class="footerInfo">
+  <h3 class="footer-title">Contacts</h3>
+  <a href="https://instagram.com" target="_blank" class="soc inst" class="insta-link" aria-label="Instagram">
+    <svg viewBox="0 0 24 24" xmlns="http://w3.org">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+    </svg>
+  </a>
+  <p class="contact-item">
+      <!-- Ссылка для автоматического звонка/вызова приложения -->
+      <span class="phone-link">+123 456 78900</span>
+      <!-- Кнопка копирования с иконкой -->
+    <button type="button" class="copy-btn copy-phone-btn" data-phone="+7676767676" aria-label="Скопировать телефон">
+      <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M16 1H4c-1.1 0-2 .9-2 2v12h2V3h12V1z"/>
+        <path d="M19 5H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+      </svg>
+    </button>
+  </p>
+    
+  
+<a href="https://t.me/your_username" class="soc tg" target="_blank" rel="noopener noreferrer">
+  <svg class="tg-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.55.83-1.12.51l-3.01-2.22-1.45 1.4c-.16.16-.3.3-.61.3l.22-3.06 5.56-5.02c.24-.22-.05-.34-.37-.13l-6.87 4.33-2.96-.92c-.64-.2-.65-.64.14-.95l11.57-4.46c.54-.19 1.01.13.89.94z"/>
+  </svg>
+</a>
+    <div class="footer-email-container">
+      <a href="mailto:mememe@gmail.com" class="email-link">mememe@gmail.com</a>
+      <button onclick="copyEmail()" class="copy-btn" title="Скопировать email">
+        <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <!-- Задний прямоугольник -->
+        <path d="M16 1H4c-1.1 0-2 .9-2 2v12h2V3h12V1z"/>
+        <!-- Передний прямоугольник -->
+        <path d="M19 5H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+      </svg>
+      </button>
+    </div>
   </div>
+</footer>
+
+
 
 </body>
 </html>
