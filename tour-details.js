@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Получаем ID тура из ссылки (например: tour-details.html?id=recXXXXX)
     const urlParams = new URLSearchParams(window.location.search);
     const tourId = urlParams.get('id');
 
@@ -8,27 +7,41 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // 2. Запрашиваем все туры через наш бэкенд
     fetch('/api/get-tours')
     .then(response => response.json())
     .then(data => {
         if (data.success && data.tours.length > 0) {
-            // Ищем конкретный тур по его ID
             const currentTour = data.tours.find(t => t.id === tourId);
 
             if (currentTour) {
-                // 3. Заполняем HTML данными из Airtable
+                // Заполняем текстовые данные
                 document.getElementById('tourTitle').innerText = currentTour.name;
                 document.getElementById('tourDate').innerText = currentTour.date;
                 document.getElementById('tourPrice').innerText = currentTour.price;
                 document.getElementById('tourDesc').innerText = currentTour.description;
-                
-                const img = document.getElementById('tourImage');
-                img.src = currentTour.image;
-                img.alt = currentTour.name;
-
-                // Настраиваем кнопку бронирования, чтобы она автоматически вписывала имя тура в анкету
                 document.getElementById('bookBtn').href = `index.html?tour=${encodeURIComponent(currentTour.name)}#tgOrderForm`;
+
+                // ====== СБОРКА СЛАЙДЕРА ГАЛЕРЕИ ======
+                const slidesContainer = document.getElementById('slidesContainer');
+                
+                // Если в галерее пусто, используем главную картинку тура как единственный слайд
+                const imagesToRender = currentTour.gallery.length > 0 ? currentTour.gallery : [currentTour.image];
+
+                imagesToRender.forEach((imgUrl, index) => {
+                    const slideDiv = document.createElement('div');
+                    slideDiv.className = `details-slide ${index === 0 ? 'slide-active' : ''}`;
+                    
+                    const img = document.createElement('img');
+                    img.src = imgUrl;
+                    img.alt = `${currentTour.name} - фото ${index + 1}`;
+                    
+                    slideDiv.appendChild(img);
+                    slidesContainer.appendChild(slideDiv);
+                });
+
+                // Инициализируем управление стрелками
+                initDetailsSlider(imagesToRender.length);
+
             } else {
                 document.getElementById('tourTitle').innerText = 'Тур не найден';
             }
@@ -38,3 +51,34 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Ошибка загрузки деталей тура:', error);
     });
 });
+
+// Функция работы стрелок слайдера деталей
+function initDetailsSlider(totalSlides) {
+    const prevArrow = document.querySelector('.prev-arrow');
+    const nextArrow = document.querySelector('.next-arrow');
+    
+    // Если картинка всего одна, прячем стрелочки, они не нужны
+    if (totalSlides <= 1 && prevArrow && nextArrow) {
+        prevArrow.style.display = 'none';
+        nextArrow.style.display = 'none';
+        return;
+    }
+
+    let currentIndex = 0;
+
+    function changeSlide(direction) {
+        const slides = document.querySelectorAll('.details-slide');
+        slides[currentIndex].classList.remove('slide-active');
+
+        currentIndex += direction;
+
+        // Зацикливание слайдов
+        if (currentIndex >= totalSlides) currentIndex = 0;
+        if (currentIndex < 0) currentIndex = totalSlides - 1;
+
+        slides[currentIndex].classList.add('slide-active');
+    }
+
+    if (nextArrow) nextArrow.addEventListener('click', () => changeSlide(1));
+    if (prevArrow) prevArrow.addEventListener('click', () => changeSlide(-1));
+}

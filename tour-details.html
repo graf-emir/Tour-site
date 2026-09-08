@@ -18,9 +18,16 @@
 
     <div class="tours-info">
       <!-- Картинка тура -->
-      <div class="details-media">
-        <img id="tourImage" src="" alt="Photo">
+      <!-- ИЗМЕНЕНО: Теперь здесь интерактивный слайдер картинок -->
+      <div class="details-media-slider">
+        <div id="slidesContainer" class="slides-container">
+          <!-- Сюда JS будет вставлять картинки из галереи Airtable -->
+        </div>
+        <!-- Кнопки стрелочек (появятся, если картинок больше одной) -->
+        <button class="slider-arrow prev-arrow">&#10094;</button>
+        <button class="slider-arrow next-arrow">&#10095;</button>
       </div>
+
 
       <!-- Текстовый блок -->
       <div class="details-content">
