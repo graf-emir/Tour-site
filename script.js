@@ -1,57 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('toursContainer');
     const template = document.getElementById('tourTemplate');
-    const inputElement = document.getElementById('itemName'); 
+    const datalist = document.getElementById('toursList');
+    const itemInput = document.getElementById('itemName');
+
+    // 1. Отключаем стандартное автозаполнение личных данных браузера для поля тура
+    if (itemInput) {
+        itemInput.setAttribute('autocomplete', 'off');
+        
+        // Исправление для мобильных: при фокусе показываем варианты сразу
+        itemInput.addEventListener('focus', function() {
+            // На мобильных устройствах фокус с открытием клавиатуры 
+            // иногда сбрасывает значение. Принудительно стимулируем показ datalist:
+            this.click();
+        });
+    }
 
     if (!container || !template) return;
-
-    // Контейнер для кастомных подсказок
-    let dropdownList = null;
-    if (inputElement) {
-        dropdownList = document.createElement('div');
-        dropdownList.className = 'custom-autocomplete-list';
-        inputElement.parentNode.insertBefore(dropdownList, inputElement.nextSibling);
-
-        // Показываем подсказки при клике / фокусе
-        inputElement.addEventListener('focus', showDropdown);
-        inputElement.addEventListener('input', showDropdown);
-
-        // Закрываем при клике вне поля
-        document.addEventListener('click', function(e) {
-            if (e.target !== inputElement && !dropdownList.contains(e.target)) {
-                dropdownList.style.display = 'none';
-            }
-        });
-    }
-
-    function showDropdown() {
-        if (!dropdownList) return;
-        const value = inputElement.value.toLowerCase();
-        const items = dropdownList.querySelectorAll('.autocomplete-item');
-        let hasMatches = false;
-
-        items.forEach(item => {
-            const text = item.textContent.toLowerCase();
-            if (text.includes(value)) {
-                item.style.display = 'block';
-                hasMatches = true;
-            } else {
-                item.style.display = 'none';
-            }
-        });
-
-        dropdownList.style.display = hasMatches ? 'block' : 'none';
-    }
 
     fetch('/api/get-tours')
     .then(response => response.json())
     .then(data => {
         if (data.success && data.tours.length > 0) {
             container.innerHTML = ''; 
-            if (dropdownList) dropdownList.innerHTML = '';
+            if (datalist) datalist.innerHTML = '';
 
             data.tours.forEach(tour => {
-                // Код отрисовки карточек Airtable остался без изменений
+                // Код отрисовки карточек Airtable (БЕЗ ИЗМЕНЕНИЙ)
                 const cardClone = template.content.cloneNode(true);
                 
                 cardClone.querySelector('.nameTour').innerText = tour.name;
@@ -73,16 +48,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 container.appendChild(cardClone);
 
-                // Заполнение кастомного списка подсказок
-                if (dropdownList) {
-                    const item = document.createElement('div');
-                    item.className = 'autocomplete-item';
-                    item.textContent = tour.name;
-                    item.addEventListener('click', function() {
-                        inputElement.value = tour.name;
-                        dropdownList.style.display = 'none';
-                    });
-                    dropdownList.appendChild(item);
+                // 2. Наполняем datalist строго названиями туров (tour.name)
+                if (datalist) {
+                    const option = document.createElement('option');
+                    option.value = tour.name;
+                    datalist.appendChild(option);
                 }
             });
         } else {
@@ -93,11 +63,11 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Ошибка загрузки каталога:', error);
     });
     
-    // Код автозаполнения анкеты
+    // Код автозаполнения анкеты (если пришли по ссылке с параметром тура)
     const urlParams = new URLSearchParams(window.location.search);
     const chosenTour = urlParams.get('tour');
-    if (chosenTour && inputElement) {
-        inputElement.value = chosenTour;
+    if (chosenTour && itemInput) {
+        itemInput.value = chosenTour;
     }
 });
 
