@@ -91,25 +91,28 @@
 
 
     <footer class="site-footer">
-<form id="tgOrderForm" class="footer-form" autocomplete="off">
-  <div class="form-field">
-    <!-- autocomplete="off" запрещает браузеру подставлять Ваше Имя/Email -->
-    <input type="text" id="itemName" placeholder="Name of Tour, or describe your tour" list="toursList" autocomplete="off" required>
-    <datalist id="toursList"></datalist>
-  </div>
+<div class="footer-container">
+  <h3>Select tour/ Custom tour</h3>
+  <form id="tgOrderForm" class="footer-form" autocomplete="off">
+    
+    <div class="form-field" style="position: relative;">
+      <input type="text" id="itemName" placeholder="Name of Tour, or describe your tour" autocomplete="new-password" required>
+      <!-- Контейнер для подсказок добавится скриптом автоматически -->
+    </div>
 
-  <div class="form-field">
-    <input type="text" id="userName" placeholder="Your name" autocomplete="name" required>
-  </div>
-  <div class="form-field">
-    <input type="email" id="userEmail" placeholder="Your email" autocomplete="email" required>
-  </div>
-  <div class="form-field">
-    <input type="tel" id="userPhone" placeholder="Phone (Telegram/ WhatsApp)" autocomplete="tel" required>
-  </div>
-  <button type="submit" id="submitBtn">Submit</button>
-  <p id="formStatus" class="status-message"></p>
-</form>
+    <div class="form-field">
+      <input type="text" id="userName" placeholder="Your name" autocomplete="name" required>
+    </div>
+    <div class="form-field">
+      <input type="email" id="userEmail" placeholder="Your email" autocomplete="email" required>
+    </div>
+    <div class="form-field">
+      <input type="tel" id="userPhone" placeholder="Phone (Telegram/ WhatsApp)" autocomplete="tel" required>
+    </div>
+    <button type="submit" id="submitBtn">Submit</button>
+    <p id="formStatus" class="status-message"></p>
+  </form>
+</div>
 
       <div class="footerInfo">
         <a href="" class="soc">inst</a>

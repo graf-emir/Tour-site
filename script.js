@@ -1,32 +1,60 @@
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('toursContainer');
     const template = document.getElementById('tourTemplate');
-    const datalist = document.getElementById('toursList');
     const itemInput = document.getElementById('itemName');
 
-    // 1. Отключаем стандартное автозаполнение личных данных браузера для поля тура
+    if (!container || !template) return;
+
+    // Создаем кастомный контейнер под инпутом вместо datalist
+    let dropdownList = null;
     if (itemInput) {
-        itemInput.setAttribute('autocomplete', 'off');
+        // Отключаем нативное автозаполнение браузера
+        itemInput.setAttribute('autocomplete', 'new-password'); // Трюк против агрессивного автозаполнения Safari
         
-        // Исправление для мобильных: при фокусе показываем варианты сразу
-        itemInput.addEventListener('focus', function() {
-            // На мобильных устройствах фокус с открытием клавиатуры 
-            // иногда сбрасывает значение. Принудительно стимулируем показ datalist:
-            this.click();
+        dropdownList = document.createElement('div');
+        dropdownList.className = 'custom-tour-dropdown';
+        itemInput.parentNode.appendChild(dropdownList);
+
+        // Показываем подсказки при клике и вводе
+        itemInput.addEventListener('focus', filterAndShowDropdown);
+        itemInput.addEventListener('input', filterAndShowDropdown);
+
+        // Скрываем список при клике вне поля
+        document.addEventListener('click', function(e) {
+            if (e.target !== itemInput && !dropdownList.contains(e.target)) {
+                dropdownList.style.display = 'none';
+            }
         });
     }
 
-    if (!container || !template) return;
+    function filterAndShowDropdown() {
+        if (!dropdownList) return;
+        const filterText = itemInput.value.toLowerCase();
+        const items = dropdownList.querySelectorAll('.tour-option');
+        let visibleCount = 0;
+
+        items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(filterText)) {
+                item.style.display = 'block';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        dropdownList.style.display = visibleCount > 0 ? 'block' : 'none';
+    }
 
     fetch('/api/get-tours')
     .then(response => response.json())
     .then(data => {
         if (data.success && data.tours.length > 0) {
             container.innerHTML = ''; 
-            if (datalist) datalist.innerHTML = '';
+            if (dropdownList) dropdownList.innerHTML = '';
 
             data.tours.forEach(tour => {
-                // Код отрисовки карточек Airtable (БЕЗ ИЗМЕНЕНИЙ)
+                // --- КОД ОТРИСОВКИ КАРТОЧЕК AIRTABLE (БЕЗ ИЗМЕНЕНИЙ) ---
                 const cardClone = template.content.cloneNode(true);
                 
                 cardClone.querySelector('.nameTour').innerText = tour.name;
@@ -47,12 +75,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 container.appendChild(cardClone);
+                // ----------------------------------------------------
 
-                // 2. Наполняем datalist строго названиями туров (tour.name)
-                if (datalist) {
-                    const option = document.createElement('option');
-                    option.value = tour.name;
-                    datalist.appendChild(option);
+                // Наполняем кастомный список вариантами туров
+                if (dropdownList) {
+                    const option = document.createElement('div');
+                    option.className = 'tour-option';
+                    option.textContent = tour.name;
+                    
+                    // При клике на тур — подставляем название в инпут
+                    option.addEventListener('mousedown', function(e) {
+                        e.preventDefault(); // Предотвращаем потерю фокуса раньше времени
+                        itemInput.value = tour.name;
+                        dropdownList.style.display = 'none';
+                    });
+
+                    dropdownList.appendChild(option);
                 }
             });
         } else {
@@ -63,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Ошибка загрузки каталога:', error);
     });
     
-    // Код автозаполнения анкеты (если пришли по ссылке с параметром тура)
+    // Код автозаполнения анкеты (если вернулись со страницы тура)
     const urlParams = new URLSearchParams(window.location.search);
     const chosenTour = urlParams.get('tour');
     if (chosenTour && itemInput) {
