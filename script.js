@@ -6,7 +6,24 @@ document.addEventListener('DOMContentLoaded', function() {
     let loadedTours = []; // Массив для хранения названий туров
     let dropdown = null;
 
+    if (itemInput) {
+      // Функция автоматического пересчета высоты
+      function autoResize() {
+        this.style.height = 'auto'; // Сбрасываем высоту для точного расчета scrollHeight
+        this.style.height = this.scrollHeight + 'px'; // Устанавливаем высоту равную контенту
+      }
+
+      // Вешаем слушатель на ввод текста
+      itemInput.addEventListener('input', autoResize);
+
+      // Если тур автоматически подставился из URL или Airtable — пересчитываем высоту сразу
+      if (itemInput.value) {
+        autoResize.call(itemInput);
+      }
+    }
+
     // 1. Автоматически создаем список подсказок внутри .form-field
+    
     if (itemInput) {
         const formField = itemInput.closest('.form-field') || itemInput.parentElement;
         
@@ -121,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         behavior: 'smooth', 
                         block: 'center' 
                     });
-                }, 150);
+                }, 500);
             }
         });
     }

@@ -59,25 +59,27 @@
 
     <!-- ИЗМЕНЕНО: Секция ConnectingBro с текстом слева и слайдером медиа справа -->
     <div class="connectingBro">
-      <div class="host-text">
+      <!-- Левая колонка (вся текстовая часть) -->
+      <div class="host-info">
         <h2>Meow</h2>
-        <p>Your host<br>
-          Madina, exclusive tour creator.
-          Born in Kyrgyzstan and lived in UAE, Madina
-          was always proud to share her country culture,
-          great food,  beautiful nature. Creating grea
-          memories in your life and pleasant experience.
-        </p>
+        <div class="host-text">
+          <p>Your host<br>
+            Madina, exclusive tour creator.
+            Born in Kyrgyzstan and lived in UAE, Madina
+            was always proud to share her country culture,
+            great food, beautiful nature. Creating great
+            memories in your life and pleasant experience.
+          </p>
+        </div>
         <a href="info.html" class="readMore">read more</a>
       </div>
-      
+
+      <!-- Правая колонка (слайдер) -->
       <div class="host-media-slider">
         <div class="media-window">
-          <!-- Видео без кнопок управления, работает как вечная зацикленная гифка -->
           <div class="media-slide media-active">
             <video src="pict/vid.mp4" autoplay loop muted playsinline></video>
           </div>
-          <!-- Ваши дополнительные слайды-фотографии -->
           <div class="media-slide">
             <img src="pict/food.jpeg" alt="photo">
           </div>
@@ -97,8 +99,8 @@
     <form id="tgOrderForm" class="footer-form" autocomplete="off">
       
       <div class="form-field" style="position: relative;">
-        <input type="text" id="itemName" placeholder="Name of Tour, or describe your tour" autocomplete="new-password" required>
-        <!-- Контейнер для подсказок добавится скриптом автоматически -->
+        <!-- Заменили input на textarea, задали rows="1" для стартовой высоты -->
+        <textarea id="itemName" rows="1" placeholder="Name of Tour, or describe your tour" autocomplete="new-password" required></textarea>
       </div>
 
       <div class="form-field">

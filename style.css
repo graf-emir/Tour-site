@@ -384,18 +384,29 @@ span {
   padding: 40px;
   margin-bottom: 60px;
   display: flex;
-  flex-direction: row; /* Текст слева, слайдер справа */
+  flex-direction: row; /* На ПК: левая колонка с текстом, правая со слайдером */
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 30px;
 }
 
-.connectingBro h2{
+/* ЛЕВАЯ КОЛОНКА (Обертка для заголовка, текста и кнопки) */
+.host-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центрируем h2 и кнопку по горизонтали */
+  gap: 15px; /* Отступы между элементами левой колонки */
+}
+
+.connectingBro h2 {
   color: #deecb8;
+  margin: 0;
+  text-align: center;
 }
 
 .host-text {
-  flex: 1;
+  width: 100%;
   text-align: left;
 }
 
@@ -403,8 +414,8 @@ span {
   text-align: justify;
   font-size: 1.3rem;
   font-weight: 450;
-  margin-bottom: 20px;
-  color: #e8ecb8; /* ИЗМЕНЕНО: Возвращен темный цвет текста, белый #f4fff9 не читался на голубом */
+  margin: 0;
+  color: #e8ecb8;
 }
 
 .connectingBro .readMore {
@@ -414,28 +425,29 @@ span {
   color: #533f03;
   text-decoration: none;
   border-radius: 5px;
-  font-weight: bold; /* ИЗМЕНЕНО: Значение font-family: bold было неверным, нужно font-weight */
+  font-weight: bold;
   font-size: 1.2rem;
   line-height: 25px;
-  transition: transform 0.4s ease, filter 0.4s ease;
+  cursor: pointer;
+  align-self: center; /* Фиксируем кнопку по центру левой колонки */
+
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
   transform: scale(1);
-  filter: brightness(1); /* Исходная 100% яркость */
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-.connectingBro .readMore:hover {
-  /* Плавное увеличение */
-  transform: scale(1.03);
-
-  /* Затемняем градиент на 20% (оставляем 80% яркости) */
-  filter: brightness(0.8);
+/* Ховер для ПК с мышкой */
+@media (hover: hover) {
+  .connectingBro .readMore:hover {
+    transform: scale(1.03);
+    filter: brightness(0.85);
+  }
 }
 
-.connectingBro .readMore:hover {
-  background-color: #c3e6cb;
-  transition: 0.4s;
-}
-
-/* Контейнер интерактивного слайдера */
+/* ПРАВАЯ КОЛОНКА (Интерактивный слайдер) */
 .host-media-slider {
   flex: 1;
   position: relative;
@@ -454,7 +466,7 @@ span {
   position: relative;
 }
 
-/* Индивидуальные слайды (скрыты по умолчанию) */
+/* Индивидуальные слайды */
 .media-slide {
   position: absolute;
   top: 0;
@@ -473,14 +485,14 @@ span {
   opacity: 1;
   position: relative;
   z-index: 2;
-  height: 100%; /* ДОБАВЛЕНО: Чтобы на ПК занимал всю высоту */
+  height: 100%;
 }
 
 .media-slide video,
 .media-slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Изображения и видео заполняют блок без полей */
+  object-fit: cover;
 }
 
 /* Кнопки стрелочек */
@@ -502,18 +514,74 @@ span {
   cursor: pointer;
   z-index: 10;
   transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.slider-btn:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-  transform: translateY(-50%) scale(1.05);
+@media (hover: hover) {
+  .slider-btn:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: translateY(-50%) scale(1.05);
+  }
 }
 
 .prev-btn { left: 15px; }
 .next-btn { right: 15px; }
 
 /* ==========================================
-   5. 📝 ПОДВАЛ САЙТА И ФОРМА
+ 5. АДАПТИВНОСТЬ ПОД МОБИЛЬНЫЕ ТЕЛЕФОНЫ
+========================================== */
+@media (max-width: 768px) {
+  .connectingBro {
+    flex-direction: column; /* Элементы встают в одну вертикальную колонку */
+    text-align: center;
+    background-color: #508259;
+    padding: 30px 15px;
+    gap: 25px;
+  }
+
+  .host-info {
+    width: 100%;
+  }
+
+  .host-text {
+    text-align: center;
+  }
+
+  .host-media-slider {
+    width: 100%;
+    max-width: 380px; 
+    min-height: 400px;
+    margin: 0 auto; 
+  }
+
+  .media-window {
+    height: 100%;
+  }
+
+  .media-slide {
+    height: 100%;
+  }
+
+  .media-slide.media-active {
+    height: 100%;
+  }
+
+  .media-slide video,
+  .media-slide img {
+    width: 100%;
+    max-height: 500px; 
+    object-fit: cover;
+  }
+
+  .slider-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+}
+
+/* ==========================================
+   6. ПОДВАЛ САЙТА И ФОРМА
    ========================================== */
 .footer-container {
   background-color: #508259;
@@ -632,6 +700,27 @@ span {
   animation: tapBounce 0.25s ease;
 }
 
+#itemName {
+  width: 100%;
+  resize: none; /* Отключаем стандартный угол изменения размера в браузере */
+  overflow-y: hidden; /* Скрываем полосу прокрутки */
+  min-height: 48px; /* Минимальная высота как у обычного инпута */
+  padding: 12px 16px;
+  box-sizing: border-box;
+  background: linear-gradient(45deg, #dcd4a3 32%, #d2cea5db 70%, #c7bf9194 95%);
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.4;
+  border-radius: 10px;
+  border: 1px solid #416d51;
+  transition: border-color 0.2s ease;
+}
+
+#itemName:focus {
+  outline: none;
+  border-color: #fff3cd;
+}
+
 #bookBtn {
   background: linear-gradient(45deg, #f2e87c 20%, #fffbda, #f2e87c 80%);
   color: #533f03;
@@ -695,7 +784,6 @@ span {
   align-content: center;
 }
 
-
 .soc {
   place-self: center;
   min-width: 60px;
@@ -755,6 +843,7 @@ span {
 
 a.email-link{
   font-size: 20px;
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -826,6 +915,7 @@ a.email-link:hover {
   color: #533f03;
   text-decoration: none;
   font-size: 20px;
+  font-weight: 600;
 }
 
 .phone-link:hover {
@@ -838,54 +928,7 @@ a.email-link:hover {
 }
 
 
-/* ==========================================
-   6. 📱 АДАПТИВНОСТЬ ПОД МОБИЛЬНЫЕ ТЕЛЕФОНЫ
-   ========================================== */
-@media (max-width: 768px) {
-  .connectingBro {
-    flex-direction: column; /* Текст и слайдер встают в одну вертикальную行走 колонку */
-    text-align: center;
-    background-color: #508259;
-    padding: 30px 15px;
-  }
 
-  .host-text {
-    text-align: center;
-  }
-
-  /* ИСПРАВЛЕНО: Теперь и родитель, и все вложенные элементы принудительно равны 100% от 180px */
-  .host-media-slider {
-    width: 100%;
-    max-width: 380px; 
-    min-height: 400px !important;
-    margin: 0 auto; 
-  }
-
-  .media-window {
-    height: 100%;
-  }
-
-  .media-slide {
-    height: 100%;
-  }
-
-  .media-slide.media-active {
-    height: 100%;
-  }
-
-  .media-slide video,
-  .media-slide img {
-    width: 100%;
-    height: 100%; 
-    object-fit: cover;
-  }
-
-  .slider-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-  }
-}
 
 .details-header {
   margin-bottom: 30px;
@@ -932,11 +975,6 @@ a.email-link:hover {
   .tours-info { flex-direction: column; gap: 20px; }
 }
 /* Обертка для поля ввода, если поле еще не обернуто */
-
-
-.form-field {
-    position: relative; /* Чтобы выпадающее меню позиционировалось относительно инпута */
-}
 
 .custom-tour-dropdown {
     display: none;
