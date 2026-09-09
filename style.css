@@ -264,11 +264,14 @@ span {
   margin-bottom: 60px;
 }
 
-.catalog header h1 {
+.catalog header {
+  position: relative;
+  top: -10px;
   text-align: center;
   color: #237031;
-  margin-bottom: 30px;
-  font-size: 2rem;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  line-height: 40px;
 }
 
 /* Сетка для автоматических карточек */
@@ -300,28 +303,35 @@ span {
 }
 
 .tourImg {
+  position: relative;
   width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 10px;
-  background-color: #e9ecef;
+  background-color: #85919d;
   margin: 15px 0;
+  top: -10px;
 }
 
 .nameTour {
   color: #fff3cd;
-  font-size: 1.3rem;
+  font-size: 2rem;
+  position: relative;
+  top: -10px;
 }
 
 .tourDate {
   color: #fff3cd;
-  font-size: 0.9rem;
+  font-size: 1.3rem;
   margin-bottom: 15px;
+  top: -10px;
 }
 
 .tourCard .readMore {
   background: linear-gradient(45deg, #fdea85 20%, #fff9c9, #fdea85 80%);
   color: #533f03;
+  font-size: 1.2rem;
+  line-height: 20px;
   align-self: center;
   width: 50%;
   padding: 15px;
@@ -380,6 +390,10 @@ span {
   gap: 20px;
 }
 
+.connectingBro h2{
+  color: #deecb8;
+}
+
 .host-text {
   flex: 1;
   text-align: left;
@@ -388,6 +402,7 @@ span {
 .connectingBro p {
   text-align: justify;
   font-size: 1.3rem;
+  font-weight: 450;
   margin-bottom: 20px;
   color: #e8ecb8; /* ИЗМЕНЕНО: Возвращен темный цвет текста, белый #f4fff9 не читался на голубом */
 }
@@ -400,7 +415,8 @@ span {
   text-decoration: none;
   border-radius: 5px;
   font-weight: bold; /* ИЗМЕНЕНО: Значение font-family: bold было неверным, нужно font-weight */
-  
+  font-size: 1.2rem;
+  line-height: 25px;
   transition: transform 0.4s ease, filter 0.4s ease;
   transform: scale(1);
   filter: brightness(1); /* Исходная 100% яркость */
