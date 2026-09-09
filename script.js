@@ -4,70 +4,90 @@ document.addEventListener('DOMContentLoaded', function() {
     const datalist = document.getElementById('toursList');
     const itemInput = document.getElementById('itemName');
 
-    // 1. Отключаем стандартное автозаполнение личных данных браузера для поля тура
+    // 1. Настройка инпута и подсказок
     if (itemInput) {
         itemInput.setAttribute('autocomplete', 'off');
         
-        // Исправление для мобильных: при фокусе показываем варианты сразу
+        // Показываем ВСЕ подсказки datalist даже если в инпуте уже записан текст
         itemInput.addEventListener('focus', function() {
-            // На мобильных устройствах фокус с открытием клавиатуры 
-            // иногда сбрасывает значение. Принудительно стимулируем показ datalist:
-            this.click();
+            // Если текст уже подставлен из URL, временный сброс значения позволяет открыть полный выпадающий список
+            const tempVal = this.value;
+            this.value = '';
+            
+            // Используем setTimeout, чтобы браузер успел отрисовать полный список вариантов
+            setTimeout(() => {
+                if (!this.value) this.value = tempVal;
+            }, 1);
         });
     }
 
-    if (!container || !template) return;
+    // 2. Подгрузка туров и наполнение datalist
+    if (container && template) {
+        fetch('/api/get-tours')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.tours.length > 0) {
+                container.innerHTML = ''; 
+                if (datalist) datalist.innerHTML = '';
 
-    fetch('/api/get-tours')
-    .then(response => response.json())
-    .then(data => {
-        if (data.success && data.tours.length > 0) {
-            container.innerHTML = ''; 
-            if (datalist) datalist.innerHTML = '';
+                data.tours.forEach(tour => {
+                    const cardClone = template.content.cloneNode(true);
+                    
+                    cardClone.querySelector('.nameTour').innerText = tour.name;
+                    cardClone.querySelector('.tourDate').innerText = tour.date;
+                    const img = cardClone.querySelector('.tourImg');
+                    img.src = tour.image;
+                    img.alt = `Фото тура: ${tour.name}`;
 
-            data.tours.forEach(tour => {
-                // Код отрисовки карточек Airtable (БЕЗ ИЗМЕНЕНИЙ)
-                const cardClone = template.content.cloneNode(true);
-                
-                cardClone.querySelector('.nameTour').innerText = tour.name;
-                cardClone.querySelector('.tourDate').innerText = tour.date;
-                const img = cardClone.querySelector('.tourImg');
-                img.src = tour.image;
-                img.alt = `Фото тура: ${tour.name}`;
-
-                const readMoreBtn = cardClone.querySelector('.readMore');
-                if (readMoreBtn) {
-                    if (readMoreBtn.tagName === 'A') {
-                        readMoreBtn.href = `tour-details.html?id=${tour.id}`;
-                    } else {
-                        readMoreBtn.addEventListener('click', () => {
-                            window.location.href = `tour-details.html?id=${tour.id}`;
-                        });
+                    const readMoreBtn = cardClone.querySelector('.readMore');
+                    if (readMoreBtn) {
+                        if (readMoreBtn.tagName === 'A') {
+                            readMoreBtn.href = `tour-details.html?id=${tour.id}`;
+                        } else {
+                            readMoreBtn.addEventListener('click', () => {
+                                window.location.href = `tour-details.html?id=${tour.id}`;
+                            });
+                        }
                     }
-                }
 
-                container.appendChild(cardClone);
+                    container.appendChild(cardClone);
 
-                // 2. Наполняем datalist строго названиями туров (tour.name)
-                if (datalist) {
-                    const option = document.createElement('option');
-                    option.value = tour.name;
-                    datalist.appendChild(option);
-                }
-            });
-        } else {
-            container.innerHTML = '<p>На данный момент активных туров нет.</p>';
-        }
-    })
-    .catch(error => {
-        console.error('Ошибка загрузки каталога:', error);
-    });
-    
-    // Код автозаполнения анкеты (если пришли по ссылке с параметром тура)
+                    // Наполняем datalist турами
+                    if (datalist) {
+                        const option = document.createElement('option');
+                        option.value = tour.name;
+                        datalist.appendChild(option);
+                    }
+                });
+            } else {
+                container.innerHTML = '<p>На данный момент активных туров нет.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка загрузки каталога:', error);
+        });
+    }
+
+    // 3. Логика перехода со второй страницы (автозаполнение + правильный скролл на мобильных)
     const urlParams = new URLSearchParams(window.location.search);
     const chosenTour = urlParams.get('tour');
+
     if (chosenTour && itemInput) {
+        // Подставляем название тура в инпут
         itemInput.value = chosenTour;
+
+        // Плавно прокручиваем к анкете ПОСЛЕ загрузки всех картинок на мобильном
+        window.addEventListener('load', () => {
+            const orderForm = document.getElementById('tgOrderForm');
+            if (orderForm) {
+                setTimeout(() => {
+                    orderForm.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                }, 150);
+            }
+        });
     }
 });
 
@@ -122,25 +142,6 @@ document.getElementById('tgOrderForm').addEventListener('submit', function(e) {
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-window.addEventListener('load', () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const tourParam = urlParams.get('tour');
-
-  // Если в URL есть параметр тура
-  if (tourParam) {
-    const orderForm = document.getElementById('tgOrderForm');
-
-    if (orderForm) {
-      // Небольшая задержка (500ms), чтобы мобильный браузер точно пересчитал высоту страницы
-      setTimeout(() => {
-        orderForm.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'center' // 'center' гарантирует, что форма встанет ровно посередине экрана телефона
-        });
-      }, 500);
-    }
-  }
-});
 
 //////////////////////////////////////////////////////////////////////////////////////
 
