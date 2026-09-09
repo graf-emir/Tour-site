@@ -122,6 +122,28 @@ document.getElementById('tgOrderForm').addEventListener('submit', function(e) {
 
 ///////////////////////////////////////////////////////////////////////////////////
 
+window.addEventListener('load', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const tourParam = urlParams.get('tour');
+
+  // Если в URL есть параметр тура
+  if (tourParam) {
+    const orderForm = document.getElementById('tgOrderForm');
+
+    if (orderForm) {
+      // Небольшая задержка (100ms), чтобы мобильный браузер точно пересчитал высоту страницы
+      setTimeout(() => {
+        orderForm.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' // 'center' гарантирует, что форма встанет ровно посередине экрана телефона
+        });
+      }, 100);
+    }
+  }
+});
+
+//////////////////////////////////////////////////////////////////////////////////////
+
 // ====== СЛАЙДЕР В ШАПКЕ САЙТА (ЗАЦИКЛЕННЫЙ ФОН) ======
 function initHeaderSlider() {
     const slides = document.querySelectorAll('.header-slide');

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('tourDate').innerText = currentTour.date;
                 document.getElementById('tourPrice').innerText = currentTour.price;
                 document.getElementById('tourDesc').innerText = currentTour.description;
-                document.getElementById('bookBtn').href = `index.html?tour=${encodeURIComponent(currentTour.name)}#tgOrderForm`;
+                document.getElementById('bookBtn').href = `index.html?tour=${encodeURIComponent(currentTour.name)}`;
 
                 // ====== СБОРКА СЛАЙДЕРА ГАЛЕРЕИ ======
                 const slidesContainer = document.getElementById('slidesContainer');
