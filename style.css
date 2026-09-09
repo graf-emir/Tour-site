@@ -26,7 +26,6 @@ html {
   scroll-behavior: smooth; /* Включает плавную прокрутку по всему сайту */
 }
 
-
 .main {
   max-width: 1200px;
   margin: 0 auto;
@@ -112,28 +111,9 @@ span {
   box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-.ihhheader {
-  position: relative;
-  min-height: 400px;
-  height: 51vh; /* Занимает 70% высоты экрана */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  margin-bottom: 40px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-}
-
 /* Контейнер для фоновых изображений */
-.header-bg-slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
+/* Контейнеры фонового слайдера */
+.header-bg-slider,
 .iheader-bg-slider {
   position: absolute;
   top: 0;
@@ -143,7 +123,7 @@ span {
   z-index: 1;
 }
 
-/* Слайды фона */
+/* Слайды фона (Мобильная версия - обычный cover) */
 .header-slide {
   position: absolute;
   top: 0;
@@ -153,7 +133,7 @@ span {
   background-size: cover;
   background-position: center;
   opacity: 0;
-  transition: opacity 1.5s ease-in-out; /* Плавное перетекание за 1.5 сек */
+  transition: opacity 1.5s ease-in-out;
 }
 
 /* Активный фон */
@@ -161,10 +141,57 @@ span {
   opacity: 1;
 }
 
+/* ==========================================
+   ВЕРСИЯ ДЛЯ ПК (экраны wider 768px)
+   ========================================== */
+@media (min-width: 769px) {
+  /* 1. РАЗМЫТЫЙ ФОН ПО БОКАМ */
+  .header-slide::before {
+    content: '';
+    position: absolute;
+    top: -0%;
+    left: -0%;
+    width: 100%;
+    height: 100%;
+
+    /* Забираем фоновую картинку слайда */
+    background-image: inherit; 
+    background-size: cover;
+    background-position: center;
+
+    /* Применяем блюр ИСКЛЮЧИТЕЛЬНО к этому фоновому слою */
+    filter: blur(10px) brightness(0.6);
+  }
+
+  /* 2. ЧЕТКАЯ КАРТИНКА ПО ЦЕНТРУ */
+  .header-slide::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%); /* Выравниваем ровно по центру */
+    height: 100%;
+
+    /* === РЕГУЛИРОВКА ШИРИНЫ ЦЕНТРАЛЬНОЙ КОЛОНКИ === */
+    /* Поставьте 60%, 70% или 800px - насколько широкой должна быть фотка */
+    width: 30%; 
+
+    /* Забираем ту же картинку */
+    background-image: inherit; 
+    background-size: cover; /* Заполняет всю ширину колонки */
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Дополнительно: можно сделать легкую тень по бокам от центральной фотки */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  }
+}
+
 .logo img {
   position: absolute;
-  top: 30px;
-  z-index: 2;
+  top: 15px;
+  left: 15px;
+  z-index: 3;
   max-width: 40px;
   max-height: 40px;
 }
@@ -298,6 +325,7 @@ span {
   width: 50%;
   padding: 15px;
   cursor: pointer;
+  text-decoration: none;
 
   /* Сброс системных стилей и синей вспышки на смартфонах */
   -webkit-appearance: none;
@@ -340,7 +368,7 @@ span {
  4. 👋 БЛОК ОБ АВТОРЕ С МЕДИА-СЛАЙДЕРОМ
 ========================================== */
 .connectingBro {
-  background-color: #3d674d;
+  background-color: #508259;
   border-radius: 20px;
   padding: 40px;
   margin-bottom: 60px;
@@ -396,7 +424,7 @@ span {
   position: relative;
   width: 100%;
   max-width: 480px;
-  height: 320px;
+  height: 520px;
   background-color: #000;
   border-radius: 15px;
   overflow: hidden;
@@ -513,7 +541,7 @@ span {
   border-color: #fff3cd; /* Желтая подсветка при клике */
 }
 
-#submitBtn {
+#submitBtn, #bookBtn {
   background: linear-gradient(45deg, #f2e87c 20%, #fffbda, #f2e87c 80%);
   color: #533f03;
   font-size: 1rem;
@@ -533,13 +561,13 @@ span {
 
 /* Ховер оставляем только для ПК */
 @media (hover: hover) {
-  #submitBtn:hover {
+  #submitBtn, #bookBtn:hover {
     transform: scale(1.02);
   }
 }
 
 /* Класс с быстрой анимацией клика для телефона и ПК */
-#submitBtn.clicked {
+#submitBtn, #bookBtn.clicked {
   animation: tapBounce 0.25s ease;
 }
 
@@ -619,9 +647,6 @@ span {
   color: #0088cc; 
 }
 
-
-
-
 .footerInfo p{
   color: #fff3cd;
 }
@@ -632,7 +657,6 @@ span {
   
   margin: 0;
   color: #fff9e6;
-  font-size: 1.5rem;
   text-align: center; /* Выравнивание по центру */
 }
 
@@ -784,7 +808,7 @@ a.email-link:hover {
 .tours-info {
   display: flex;
   gap: 40px;
-  background: #ffffff;
+  background: #72a77c;
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.04);
@@ -932,4 +956,10 @@ a.email-link:hover {
     max-width: 100%;
     height: 280px; /* На смартфонах слайдер будет чуть ниже и аккуратнее */
   }
+}
+
+#tourDesc {
+  color: #0e0e0c;
+  font-size: 18px;
+  font-weight: 600;
 }
