@@ -534,6 +534,49 @@ span {
   transition: border-color 0.3s;
 }
 
+/* Кастомный выпадающий список для .form-field */
+.form-field {
+  position: relative; /* Гарантирует позиционирование списка ровно под инпутом */
+}
+
+.tours-autocomplete-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 999;
+  display: none;
+  margin-top: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tours-autocomplete-list.show {
+  display: block;
+}
+
+.tours-autocomplete-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  color: #24292f;
+  font-size: 14px;
+  border-bottom: 1px solid #f0f0f0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tours-autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.tours-autocomplete-item:active,
+.tours-autocomplete-item:hover {
+  background-color: #f2e87c; /* Цвет подсветки при тапе */
+}
+
 .form-field input::placeholder {
   color: #666967;
 }
@@ -583,6 +626,7 @@ span {
   margin-top: 10px;
   cursor: pointer;
   text-decoration: none;
+  align-self: center;
 
   -webkit-appearance: none;
   appearance: none;

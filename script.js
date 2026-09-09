@@ -1,36 +1,81 @@
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('toursContainer');
     const template = document.getElementById('tourTemplate');
-    const datalist = document.getElementById('toursList');
     const itemInput = document.getElementById('itemName');
+    
+    let loadedTours = []; // Массив для хранения названий туров
+    let dropdown = null;
 
-    // 1. Настройка инпута и подсказок
+    // 1. Автоматически создаем список подсказок внутри .form-field
     if (itemInput) {
-        itemInput.setAttribute('autocomplete', 'off');
+        const formField = itemInput.closest('.form-field') || itemInput.parentElement;
         
-        // Показываем ВСЕ подсказки datalist даже если в инпуте уже записан текст
-        itemInput.addEventListener('focus', function() {
-            // Если текст уже подставлен из URL, временный сброс значения позволяет открыть полный выпадающий список
-            const tempVal = this.value;
-            this.value = '';
+        dropdown = document.createElement('div');
+        dropdown.className = 'tours-autocomplete-list';
+        formField.appendChild(dropdown);
+
+        // Функция отрисовки вариантов
+        function renderDropdown(filterText = '') {
+            dropdown.innerHTML = '';
             
-            // Используем setTimeout, чтобы браузер успел отрисовать полный список вариантов
-            setTimeout(() => {
-                if (!this.value) this.value = tempVal;
-            }, 1);
+            const filtered = loadedTours.filter(tourName => 
+                tourName.toLowerCase().includes(filterText.toLowerCase())
+            );
+
+            if (filtered.length === 0) {
+                dropdown.classList.remove('show');
+                return;
+            }
+
+            filtered.forEach(tourName => {
+                const item = document.createElement('div');
+                item.className = 'tours-autocomplete-item';
+                item.textContent = tourName;
+                
+                // Выбор тура при тапе/клике
+                item.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    itemInput.value = tourName;
+                    dropdown.classList.remove('show');
+                });
+
+                dropdown.appendChild(item);
+            });
+
+            dropdown.classList.add('show');
+        }
+
+        // Открытие списка при фокусе или клике
+        itemInput.addEventListener('focus', () => renderDropdown(itemInput.value));
+        itemInput.addEventListener('click', () => renderDropdown(itemInput.value));
+
+        // Фильтрация при вводе
+        itemInput.addEventListener('input', (e) => {
+            renderDropdown(e.target.value);
+        });
+
+        // Закрытие при клике вне инпута
+        document.addEventListener('click', (e) => {
+            if (!itemInput.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
         });
     }
 
-    // 2. Подгрузка туров и наполнение datalist
+    // 2. Подгрузка туров и заполнение данных
     if (container && template) {
         fetch('/api/get-tours')
         .then(response => response.json())
         .then(data => {
             if (data.success && data.tours.length > 0) {
                 container.innerHTML = ''; 
-                if (datalist) datalist.innerHTML = '';
+                loadedTours = []; 
 
                 data.tours.forEach(tour => {
+                    // Сохраняем имя тура для подсказок
+                    loadedTours.push(tour.name);
+
+                    // Отрисовка карточек
                     const cardClone = template.content.cloneNode(true);
                     
                     cardClone.querySelector('.nameTour').innerText = tour.name;
@@ -51,13 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
 
                     container.appendChild(cardClone);
-
-                    // Наполняем datalist турами
-                    if (datalist) {
-                        const option = document.createElement('option');
-                        option.value = tour.name;
-                        datalist.appendChild(option);
-                    }
                 });
             } else {
                 container.innerHTML = '<p>На данный момент активных туров нет.</p>';
@@ -68,15 +106,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 3. Логика перехода со второй страницы (автозаполнение + правильный скролл на мобильных)
+    // 3. Переход по кнопке «Забронировать» со второй страницы
     const urlParams = new URLSearchParams(window.location.search);
     const chosenTour = urlParams.get('tour');
 
     if (chosenTour && itemInput) {
-        // Подставляем название тура в инпут
         itemInput.value = chosenTour;
 
-        // Плавно прокручиваем к анкете ПОСЛЕ загрузки всех картинок на мобильном
         window.addEventListener('load', () => {
             const orderForm = document.getElementById('tgOrderForm');
             if (orderForm) {
