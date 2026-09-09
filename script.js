@@ -131,13 +131,13 @@ window.addEventListener('load', () => {
     const orderForm = document.getElementById('tgOrderForm');
 
     if (orderForm) {
-      // Небольшая задержка (100ms), чтобы мобильный браузер точно пересчитал высоту страницы
+      // Небольшая задержка (200ms), чтобы мобильный браузер точно пересчитал высоту страницы
       setTimeout(() => {
         orderForm.scrollIntoView({ 
           behavior: 'smooth', 
           block: 'center' // 'center' гарантирует, что форма встанет ровно посередине экрана телефона
         });
-      }, 100);
+      }, 200);
     }
   }
 });
