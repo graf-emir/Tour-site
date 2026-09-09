@@ -36,6 +36,7 @@ a {
   background-color: #fff3cd;
   color: #533f03;
   font-size: 1rem;
+  font-weight: bold;
   border-radius: 6px;
   padding: 5px;
   margin: 10px 0;
@@ -541,10 +542,11 @@ span {
   border-color: #fff3cd; /* Желтая подсветка при клике */
 }
 
-#submitBtn, #bookBtn {
+#submitBtn {
   background: linear-gradient(45deg, #f2e87c 20%, #fffbda, #f2e87c 80%);
   color: #533f03;
   font-size: 1rem;
+  font-weight: bold;
   border-radius: 10px;
   border: 1px solid #508259;
   padding: 15px;
@@ -561,13 +563,44 @@ span {
 
 /* Ховер оставляем только для ПК */
 @media (hover: hover) {
-  #submitBtn, #bookBtn:hover {
+  #submitBtn:hover {
     transform: scale(1.02);
   }
 }
 
 /* Класс с быстрой анимацией клика для телефона и ПК */
-#submitBtn, #bookBtn.clicked {
+#submitBtn.clicked {
+  animation: tapBounce 0.25s ease;
+}
+
+#bookBtn {
+  background: linear-gradient(45deg, #f2e87c 20%, #fffbda, #f2e87c 80%);
+  color: #533f03;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #508259;
+  padding: 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  text-decoration: none;
+
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  transform: scale(1);
+  transition: transform 0.2s ease;
+}
+
+/* Ховер оставляем только для ПК */
+@media (hover: hover) {
+  #bookBtn:hover {
+    transform: scale(1.02);
+  }
+}
+
+/* Класс с быстрой анимацией клика для телефона и ПК */
+#bookBtn.clicked {
   animation: tapBounce 0.25s ease;
 }
 
@@ -804,6 +837,7 @@ a.email-link:hover {
   text-decoration: none;
   font-weight: bold;
   margin-bottom: 15px;
+  font-size: 1.5rem;
 }
 .tours-info {
   display: flex;
