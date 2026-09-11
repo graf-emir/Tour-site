@@ -967,7 +967,7 @@ a.email-link:hover {
   margin-bottom: 10px;
 }
 
-#tourDate {
+#tourDate, #tourPrice {
   background-color: #4e7f8f;
   color: #ffffff;
 }
