@@ -7,89 +7,188 @@
   <link rel="stylesheet" href="style.css">
   <script src="info.js" defer></script>
 </head>
-<div class="main-header">
-  <nav class="nav-bar">
-    <a href="index.html" class="nav-tab">Main</a>
-    <a href="index.html" class="nav-tab">About Us</a>
-  </nav>
-
-</div>
-
-
-<div class="ihhheader">
-  <div class="iheader-bg-slider">
-    <div class="header-slide active" style="background-image: url('pict/food.jpeg');"></div>
-    <div class="header-slide" style="background-image: url('pict/night.jpeg');"></div>
-  </div>
-
-  <div class="logo">
-    <img src="pict/nikitos.jpg" alt="mee">
-  </div>
-
-  <header>
-    <h1>Endorphin Travel</h1>
-    <p>Hello </p>
-  </header>
-</div>
-
-
-<div class="connectingBro">
-    <div class="host-text">
-      <p><h1>First text about company</h1>
-        textextextextextextext
-      </p>
-    </div>
-      
-  <div class="host-media-slider">
-    <div class="media-window">
-      <div class="media-slide media-active">
-        <video src="pict/vid.mp4" autoplay loop muted playsinline></video>
-      </div>
-
-      <div class="media-slide">
-        <img src="pict/food.jpeg" alt="photo">
-      </div>
-
-      <div class="media-slide">
-        <img src="pict/night.jpeg" alt="photo">
-      </div>
-
-    </div>
-    <button class="slider-btn prev-btn">&#10094;</button>
-    <button class="slider-btn next-btn">&#10095;</button>
-  </div>
-</div>
-
-<!--////////////////////////////////////////////////////////////////-->
-
-<div class="connectingBro">
-    <div class="host-text">
-      <p><h1>Second text (bio)</h1>
-        textextextextextextext
-      </p>
-    </div>
-      
-  <div class="host-media-slider">
-    <div class="media-window">
-      <div class="media-slide media-active">
-        <video src="pict/vid.mp4" autoplay loop muted playsinline></video>
-      </div>
-
-      <div class="media-slide">
-        <img src="pict/nikitos.jpg" alt="photo">
-      </div>
-
-      <div class="media-slide">
-        <img src="pict/night.jpeg" alt="photo">
-      </div>
-
-    </div>
-    <button class="slider-btn prev-btn">&#10094;</button>
-    <button class="slider-btn next-btn">&#10095;</button>
-  </div>
-</div>
-  
 <body>
+<div class="main-header">
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-tab gradient-link">Main</a>
+      <a href="info.html" class="nav-tab gradient-link">About Us</a>
+      <a href="general.html" class="nav-tab gradient-link">General inf.</a>
+    </nav>
+  </div>
+
+  <div class="hhheader">
+    <div class="header-bg-slider">
+      <!-- Укажите здесь пути к вашим фоновым картинкам для шапки -->
+      <div class="header-slide active" style="background-image: url('pict/food.jpeg');"></div>
+      <div class="header-slide" style="background-image: url('pict/night.jpeg');"></div>
+    </div>
+
+
+    <header>
+      <div class="logo">
+        <img src="pict/nikitos.jpg" alt="mee">
+      </div>
+      <h1>Endorphin Travel</h1>
+      <p>Exclusive Tour Creator </p>
+      <a href="#our-travels" class="see-tours-btn">Our travels</a>
+      <a href="#comfort" class="see-tours-btn">Comfort</a>
+      <a href="#our-gid" class="see-tours-btn">Our gig</a>
+      <a href="#entertaiment" class="see-tours-btn">entertaiment</a>
+    </header>
+  </div>
+
+  <div class="main">
+    <!-- ИЗМЕНЕНО: Секция ConnectingBro с текстом слева и слайдером медиа справа -->
+    <div class="connectingBro">
+      <!-- Левая колонка (вся текстовая часть) -->
+      <div class="host-info" id="our-travels">
+        <h2>Our travels</h2>
+        <div class="host-text">
+          <p>
+            Это пример текста на вкладке about us
+          </p>
+        </div>
+      </div>
+      <!-- Правая колонка (слайдер) -->
+      <div class="host-media-slider">
+        <div class="media-window">
+          <div class="media-slide media-active">
+            <video src="pict/vid.mp4" autoplay loop muted playsinline></video>
+          </div>
+          <div class="media-slide">
+            <img src="pict/food.jpeg" alt="photo">
+          </div>
+          <div class="media-slide">
+            <img src="pict/night.jpeg" alt="photo">
+          </div>
+        </div>
+        <button class="slider-btn prev-btn">&#10094;</button>
+        <button class="slider-btn next-btn">&#10095;</button>
+      </div>
+    </div>
+    <div class="connectingBro">
+      <!-- Левая колонка (вся текстовая часть) -->
+      <div class="host-info" id="comfort">
+        <h2>Comfort</h2>
+        <div class="host-text">
+          <p>
+            Это пример текста на вкладке about us
+          </p>
+        </div>
+      </div>
+      <!-- Правая колонка (слайдер) -->
+      <div class="host-media-slider">
+        <div class="media-window">
+          <div class="media-slide media-active">
+            <video src="pict/vid.mp4" autoplay loop muted playsinline></video>
+          </div>
+          <div class="media-slide">
+            <img src="pict/food.jpeg" alt="photo">
+          </div>
+          <div class="media-slide">
+            <img src="pict/night.jpeg" alt="photo">
+          </div>
+        </div>
+        <button class="slider-btn prev-btn">&#10094;</button>
+        <button class="slider-btn next-btn">&#10095;</button>
+      </div>
+    </div>
+    <div class="connectingBro">
+      <!-- Левая колонка (вся текстовая часть) -->
+      <div class="host-info" id="our-gid">
+        <h2>Our gid</h2>
+        <div class="host-text">
+          <p>
+            Это пример текста на вкладке about us
+          </p>
+        </div>
+      </div>
+      <!-- Правая колонка (слайдер) -->
+      <div class="host-media-slider">
+        <div class="media-window">
+          <div class="media-slide media-active">
+            <video src="pict/vid.mp4" autoplay loop muted playsinline></video>
+          </div>
+          <div class="media-slide">
+            <img src="pict/food.jpeg" alt="photo">
+          </div>
+          <div class="media-slide">
+            <img src="pict/night.jpeg" alt="photo">
+          </div>
+        </div>
+        <button class="slider-btn prev-btn">&#10094;</button>
+        <button class="slider-btn next-btn">&#10095;</button>
+      </div>
+    </div>
+    <div class="connectingBro">
+      <!-- Левая колонка (вся текстовая часть) -->
+      <div class="host-info" id="entertaiment">
+        <h2>Entertaiment</h2>
+        <div class="host-text">
+          <p>
+            Это пример текста на вкладке about us
+          </p>
+        </div>
+      </div>
+      <!-- Правая колонка (слайдер) -->
+      <div class="host-media-slider">
+        <div class="media-window">
+          <div class="media-slide media-active">
+            <video src="pict/vid.mp4" autoplay loop muted playsinline></video>
+          </div>
+          <div class="media-slide">
+            <img src="pict/food.jpeg" alt="photo">
+          </div>
+          <div class="media-slide">
+            <img src="pict/night.jpeg" alt="photo">
+          </div>
+        </div>
+        <button class="slider-btn prev-btn">&#10094;</button>
+        <button class="slider-btn next-btn">&#10095;</button>
+      </div>
+    </div>
+  </div>
+
+<footer class="site-footer">
+
+<div class="footerInfo">
+  <h1 class="footer-title">Contacts</h1>
+  <a href="https://instagram.com" target="_blank" class="soc inst" class="insta-link" aria-label="Instagram">
+    <svg viewBox="0 0 24 24" xmlns="http://w3.org">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+    </svg>
+  </a>
+  <p class="contact-item">
+      <!-- Ссылка для автоматического звонка/вызова приложения -->
+      <span class="phone-link">+123 456 78900</span>
+      <!-- Кнопка копирования с иконкой -->
+    <button type="button" class="copy-btn copy-phone-btn" data-phone="+7676767676" aria-label="Скопировать телефон">
+      <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M16 1H4c-1.1 0-2 .9-2 2v12h2V3h12V1z"/>
+        <path d="M19 5H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+      </svg>
+    </button>
+  </p>
+    
   
+<a href="https://t.me/your_username" class="soc tg" target="_blank" rel="noopener noreferrer">
+  <svg class="tg-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.16l-1.97 9.28c-.15.67-.55.83-1.12.51l-3.01-2.22-1.45 1.4c-.16.16-.3.3-.61.3l.22-3.06 5.56-5.02c.24-.22-.05-.34-.37-.13l-6.87 4.33-2.96-.92c-.64-.2-.65-.64.14-.95l11.57-4.46c.54-.19 1.01.13.89.94z"/>
+  </svg>
+</a>
+    <div class="footer-email-container">
+      <a href="mailto:mememe@gmail.com" class="email-link">mememe@gmail.com</a>
+      <button onclick="copyEmail()" class="copy-btn" title="Скопировать email">
+        <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <!-- Задний прямоугольник -->
+        <path d="M16 1H4c-1.1 0-2 .9-2 2v12h2V3h12V1z"/>
+        <!-- Передний прямоугольник -->
+        <path d="M19 5H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+      </svg>
+      </button>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

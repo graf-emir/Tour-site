@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
+    
+
     // 1. Автоматически создаем список подсказок внутри .form-field
     
     if (itemInput) {
