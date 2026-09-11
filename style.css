@@ -289,7 +289,7 @@ span {
 
 /* Карточка тура */
 .tourCard {
-  background-color: #508259;
+  background-color: #618996;
   border-radius: 60px;
   padding: 20px;
   width: 100%;
@@ -313,21 +313,21 @@ span {
 }
 
 .nameTour {
-  color: #fff3cd;
+  color: #ffffff;
   font-size: 2rem;
   position: relative;
   top: -10px;
 }
 
 .tourDate {
-  color: #fff3cd;
+  color: #ffffff;
   font-size: 1.3rem;
   margin-bottom: 15px;
   top: -10px;
 }
 
 .tourCard .readMore {
-  background: linear-gradient(45deg, #fdea85 20%, #fff9c9, #fdea85 80%);
+  background: linear-gradient(45deg, #ab9e58 20%, #fef9cc, #ab9e58 80%);
   color: #533f03;
   font-size: 1.2rem;
   line-height: 20px;
@@ -609,7 +609,7 @@ span {
 .form-field input {
   width: 100%;
   padding: 14px;
-  border: 1px solid #416d51;
+  border: 1px solid #a3a3a3;
   border-radius: 10px;
   background: linear-gradient(45deg, #c2c2c2 20%, #e7e7e7a6, #ffffff52 80%);
   font-size: 1rem;
@@ -661,13 +661,21 @@ span {
   background-color: #f2e87c; /* Цвет подсветки при тапе */
 }
 
+::-webkit-input-placeholder {
+  color: #31374f;
+  opacity: 1;
+}
+
 .form-field input::placeholder {
-  color: #666967;
+  color: #31374f;
 }
 
 .form-field input:focus {
-  border-color: #fff3cd; /* Желтая подсветка при клике */
+  border-color: #ffffff; /* Желтая подсветка при клике */
 }
+
+
+
 
 #submitBtn {
   background: linear-gradient(45deg, #ab9e58 25%, #fef9cc, #ab9e58 75%);
@@ -710,21 +718,21 @@ span {
   font-size: 1rem;
   line-height: 1.4;
   border-radius: 10px;
-  border: 1px solid #416d51;
+  border: 1px solid #a3a3a3;
   transition: border-color 0.2s ease;
 }
 
 #itemName:focus {
   outline: none;
-  border-color: #fff3cd;
+  border-color: #ffffff;
 }
 
 #bookBtn {
-  background: linear-gradient(45deg, #f2e87c 20%, #fffbda, #f2e87c 80%);
+  background: linear-gradient(45deg, #ab9e58 20%, #fef9cc, #ab9e58 80%);
   color: #533f03;
   font-size: 1rem;
   border-radius: 10px;
-  border: 1px solid #508259;
+  border: 1px solid #4e7f8f;
   padding: 15px;
   margin-top: 10px;
   cursor: pointer;
@@ -853,7 +861,7 @@ a.email-link:hover {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8.4px 24px;
+    padding: 8px 24px 8.8px 24px;
     border: 1px solid #7e92d7;
     border-radius: 6px;
     background-color: #f6f5f2;
@@ -916,22 +924,25 @@ a.email-link:hover {
   margin-bottom: 30px;
   text-align: left;
 }
+
 .back-link {
   display: inline-block;
-  color: #2e5a44;
+  color: #1c4a65;
   text-decoration: none;
   font-weight: bold;
   margin-bottom: 15px;
   font-size: 1.5rem;
 }
+
 .tours-info {
   display: flex;
   gap: 40px;
-  background: #72a77c;
+  background: #618996;
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.04);
 }
+
 .details-media { flex: 1; }
 .details-media img {
   width: 100%;
@@ -939,19 +950,26 @@ a.email-link:hover {
   object-fit: cover;
   border-radius: 15px;
 }
+
 .details-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
+
 .details-date, .details-price {
   font-size: 1.2rem;
-  color: #2d4037;
+  color: #ffffff;
 }
 .details-description h3 {
-  color: #1e4620;
+  color: #ffffff;
   margin-bottom: 10px;
+}
+
+#tourDate {
+  background-color: #4e7f8f;
+  color: #ffffff;
 }
 @media (max-width: 768px) {
   .tours-info { flex-direction: column; gap: 20px; }
@@ -1073,7 +1091,7 @@ a.email-link:hover {
 }
 
 #tourDesc {
-  color: #0e0e0c;
+  color: #4e7f8f;
   font-size: 18px;
   font-weight: 600;
 }
